@@ -1,0 +1,48 @@
+parameters:
+    - name: sc
+      displayName: Service Connection Name
+      type: string
+      default: FadelPrivateSP
+    
+    - name: loc
+      displayName: Location
+      type: string
+      default: WestEurope
+      values:
+      - WestEurope
+      - EastUS
+      - EastUS2
+    
+    - name: sid
+      displayName: Subscription ID
+      type: string
+      default: a94f0758-94a8-426d-a3b6-aec6e83b51de
+    
+    - name: rg
+      displayName: Resource Group Name
+      type: string
+      default: hejazi03Pipeline
+    
+    trigger:
+    - none
+    
+    pool:
+      vmImage: ubuntu-latest
+    stages:
+    - stage: BuildInfra
+      jobs:
+      - job: ActiveDirectoryVM
+        steps:
+        - task: AzureResourceManagerTemplateDeployment@3
+          displayName: Create Active Directory VM
+          inputs:
+            deploymentScope: 'Resource Group'
+            azureResourceManagerConnection: ${{ parameters.sc }}
+            subscriptionId: ${{ parameters.sid }}
+            action: 'Create Or Update Resource Group'
+            resourceGroupName: ${{ parameters.rg }}
+            location: ${{ parameters.loc }}
+            templateLocation: 'Linked artifact'
+            csmFile: 'PoCDemo/ActiveDirectory/azuredeploy.json'
+            deploymentMode: 'Incremental'
+    
