@@ -44,11 +44,18 @@
                 "description": "The version of Windows Server 2016 (DCS is not broken)"
             }
         },
-        "url": {
-            "defaultValue": "https://artifactsnttdata.blob.core.windows.net/addc",
+        "_artifactsLocation": {
+            "defaultValue": "https://github.com/NTT-DATA-Cloud-Transformation/azure-acp-public/PoCDemo/ActiveDirectory/master/",
             "type": "String",
             "metadata": {
-                "description": "The URL of the stored artifacts, https://storagename.blob.core.windows.net/container"
+                "description": "The location of resources, such as templates and DSC modules, that the template depends on"
+            }
+        },
+        "_artifactsLocationSasToken": {
+            "defaultValue": "",
+            "type": "SecureString",
+            "metadata": {
+                "description": "Auto-generated token to access _artifactsLocation"
             }
         }
     },
@@ -87,7 +94,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('url'),'/vnet.json')]",
+                    "uri": "[concat(parameters('_artifactsLocation'), '/PoCDemo/ActiveDirectory/files/vnet.json', parameters('_artifactsLocationSasToken'))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -242,7 +249,7 @@
                         "typeHandlerVersion": "2.8",
                         "autoUpgradeMinorVersion": true,
                         "settings": {
-                            "ModulesUrl": "[concat(parameters('url'),'/CreateADPDC.zip')]",
+                            "ModulesUrl": "[concat(parameters('_artifactsLocation'), '/PoCDemo/ActiveDirectory/files/CreateADPDC.zip', parameters('_artifactsLocationSasToken'))]",
                             "ConfigurationFunction": "CreateADPDC.ps1\\CreateADPDC",
                             "Properties": {
                                 "DomainName": "[parameters('domainName')]",
@@ -275,7 +282,7 @@
                         "autoUpgradeMinorVersion": true,
                         "settings": {
                             "fileUris": [
-                                "[concat(parameters('url'),'/aadconnect.ps1')]"
+                                "[concat(parameters('_artifactsLocation'), '/PoCDemo/ActiveDirectory/files/aadconnect.ps1', parameters('_artifactsLocationSasToken'))]"
                             ],
                             "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File aadconnect.ps1"
                         }
@@ -293,7 +300,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('url'),'/vnet-with-dns-server.json')]",
+                    "uri": "[concat(parameters('_artifactsLocation'), '/PoC Demo/ActiveDirectory/files/vnet-with-dns-server.json', parameters('_artifactsLocationSasToken'))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
