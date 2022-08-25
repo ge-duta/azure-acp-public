@@ -2,7 +2,7 @@ parameters:
     - name: sc
       displayName: Service Connection Name
       type: string
-      default: ACP-SC-DevOps
+      default: serviceConnection
     
     - name: loc
       displayName: Location
@@ -16,12 +16,12 @@ parameters:
     - name: sid
       displayName: Subscription ID
       type: string
-      default: 38150324-5c71-42af-b409-0b011c15608f
+      default: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
     
     - name: rg
       displayName: Resource Group Name
       type: string
-      default: hejazi04Pipeline
+      default: rgName
 
 trigger:
     - none
@@ -31,10 +31,10 @@ pool:
 stages:
     - stage: BuildInfra
       jobs:
-      - job: ActiveDirectoryVM
+      - job: deployADDCVM
         steps:
         - task: AzureResourceManagerTemplateDeployment@3
-          displayName: Create Active Directory VM
+          displayName: Active Directory VM
           inputs:
             deploymentScope: 'Resource Group'
             azureResourceManagerConnection: ${{ parameters.sc }}

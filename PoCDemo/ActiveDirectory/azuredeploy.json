@@ -91,6 +91,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2016-02-01",
             "name": "VNet",
+            // @ts-ignore
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
