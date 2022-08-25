@@ -1,0 +1,321 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "adminUsername": {
+            "defaultValue": "demouser",
+            "type": "String",
+            "metadata": {
+                "description": "The admin account of the new VM and domain"
+            }
+        },
+        "adminPassword": {
+            "defaultValue": "Demo1234567890",
+            "type": "SecureString",
+            "metadata": {
+                "description": "The password for the administrator account of the new VM and domain default: Demo1234567890"
+            }
+        },
+        "domainName": {
+            "type": "String",
+            "defaultValue": "demo.local",
+            "metadata": {
+                "description": "The FQDN of the Active Directory Domain to be created exp: domain.local"
+            }
+        },
+        "dnsPrefix": {
+            "type": "String",
+            "defaultValue": "demolocal123nttdata",
+            "metadata": {
+                "description": "The DNS prefix for the public IP address used by the Load Balancer, use a unique prefix"
+            }
+        },
+        "windowsserver": {
+            "defaultValue": "2016-Datacenter",
+            "type": "String",
+            "metadata": {
+                "description": "The version of Windows Server to use, tested on 2016-Datacenter ver 016.127.20180613"
+            }
+        },
+        "server2016ver": {
+            "defaultValue": "2016.127.20180613",
+            "type": "String",
+            "metadata": {
+                "description": "The version of Windows Server 2016 (DCS is not broken)"
+            }
+        },
+        "url": {
+            "defaultValue": "https://artifactsnttdata.blob.core.windows.net/addc",
+            "type": "String",
+            "metadata": {
+                "description": "The URL of the stored artifacts, https://storagename.blob.core.windows.net/container"
+            }
+        }
+    },
+    "variables": {
+        "virtualNetworkName": "vnet",
+        "virtualNetworkAddressRange": "10.0.0.0/16",
+        "adLBFE": "LBFE",
+        "adLBBE": "LBBE",
+        "adRDPNAT": "adRDP",
+        "adNicName": "adDCVMNic",
+        "adNicIPAddress": "10.0.0.4",
+        "adVMName": "adDCVM",
+        "adSubnetName": "adDCVMSubnet",
+        "adSubnetAddressPrefix": "10.0.0.0/24",
+        "publicIPAddressName": "adDCVMPublicIP",
+        "adLBName": "adDCVMLoadBalancer",
+        "ver": "[parameters ('server2016ver')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2020-08-01",
+            "name": "[variables('publicIPAddressName')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "dnsSettings": {
+                    "domainNameLabel": "[parameters('dnsPrefix')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2016-02-01",
+            "name": "VNet",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('url'),'/vnet.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "virtualNetworkName": {
+                        "value": "[variables('virtualNetworkName')]"
+                    },
+                    "virtualNetworkAddressRange": {
+                        "value": "[variables('virtualNetworkAddressRange')]"
+                    },
+                    "subnetName": {
+                        "value": "[variables('adSubnetName')]"
+                    },
+                    "subnetRange": {
+                        "value": "[variables('adSubnetAddressPrefix')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/loadBalancers",
+            "apiVersion": "2020-08-01",
+            "name": "[variables('adLBName')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddressName'))]"
+            ],
+            "properties": {
+                "frontendIPConfigurations": [
+                    {
+                        "name": "[variables('adLBFE')]",
+                        "properties": {
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddressName'))]"
+                            }
+                        }
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "[variables('adLBBE')]"
+                    }
+                ],
+                "inboundNatRules": [
+                    {
+                        "name": "[variables('adRDPNAT')]",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[resourceId('Microsoft.Network/loadBalancers/frontendIPConfigurations', variables('adLBName'), variables('adLBFE'))]"
+                            },
+                            "protocol": "tcp",
+                            "frontendPort": 443,
+                            "backendPort": 3389,
+                            "enableFloatingIP": false
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2020-08-01",
+            "name": "[variables('adNicName')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "Microsoft.Resources/deployments/VNet",
+                "[resourceId('Microsoft.Network/loadBalancers', variables('adLBName'))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAllocationMethod": "Static",
+                            "privateIPAddress": "[variables('adNicIPAddress')]",
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('adSubnetName'))]"
+                            },
+                            "loadBalancerBackendAddressPools": [
+                                {
+                                    "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', variables('adLBName'), variables('adLBBE'))]"
+                                }
+                            ],
+                            "loadBalancerInboundNatRules": [
+                                {
+                                    "id": "[resourceId('Microsoft.Network/loadBalancers/inboundNatRules', variables('adLBName'), variables('adRDPNAT'))]"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2021-03-01",
+            "name": "[variables('adVMName')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('adNicName'))]",
+                "[resourceId('Microsoft.Network/loadBalancers', variables('adLBName'))]"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_D2s_v3"
+                },
+                "osProfile": {
+                    "computerName": "[variables('adVMName')]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "adminPassword": "[parameters('adminPassword')]"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServer",
+                        "sku": "[parameters('windowsserver')]",
+                        "version": "[variables('ver')]"
+                    },
+                    "osDisk": {
+                        "createOption": "FromImage",
+                        "managedDisk": {
+                            "storageAccountType": "Standard_LRS"
+                        }
+                    },
+                    "dataDisks": [
+                        {
+                            "diskSizeGB": 64,
+                            "lun": 0,
+                            "createOption": "Empty"
+                        }
+                    ]
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('adNicName'))]"
+                        }
+                    ]
+                }
+            },
+            "resources": [
+                {
+                    "type": "extensions",
+                    "apiVersion": "2021-03-01",
+                    "name": "CreateADForest",
+                    "location": "[resourceGroup().location]",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Compute/virtualMachines', variables('adVMName'))]"
+                    ],
+                    "properties": {
+                        "publisher": "Microsoft.Powershell",
+                        "type": "DSC",
+                        "typeHandlerVersion": "2.8",
+                        "autoUpgradeMinorVersion": true,
+                        "settings": {
+                            "ModulesUrl": "[concat(parameters('url'),'/CreateADPDC.zip')]",
+                            "ConfigurationFunction": "CreateADPDC.ps1\\CreateADPDC",
+                            "Properties": {
+                                "DomainName": "[parameters('domainName')]",
+                                "AdminCreds": {
+                                    "UserName": "[parameters('adminUsername')]",
+                                    "Password": "PrivateSettingsRef:AdminPassword"
+                                }
+                            }
+                        },
+                        "protectedSettings": {
+                            "Items": {
+                                "AdminPassword": "[parameters('adminPassword')]"
+                            }
+                        }
+                    }
+                },
+                {
+                    "type": "extensions",
+                    "apiVersion": "2020-12-01",
+                    "name": "AADConnect",
+                    "location": "[resourceGroup().location]",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Compute/virtualMachines', variables('adVMName'))]",
+                        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('adVMName'),'CreateADForest')]"
+                    ],
+                    "properties": {
+                        "publisher": "Microsoft.Compute",
+                        "type": "CustomScriptExtension",
+                        "typeHandlerVersion": "1.9",
+                        "autoUpgradeMinorVersion": true,
+                        "settings": {
+                            "fileUris": [
+                                "[concat(parameters('url'),'/aadconnect.ps1')]"
+                            ],
+                            "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File aadconnect.ps1"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2016-02-01",
+            "name": "UpdateVNetDNS",
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('adVMName'), 'CreateADForest')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('url'),'/vnet-with-dns-server.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "virtualNetworkName": {
+                        "value": "[variables('virtualNetworkName')]"
+                    },
+                    "virtualNetworkAddressRange": {
+                        "value": "[variables('virtualNetworkAddressRange')]"
+                    },
+                    "subnetName": {
+                        "value": "[variables('adSubnetName')]"
+                    },
+                    "subnetRange": {
+                        "value": "[variables('adSubnetAddressPrefix')]"
+                    },
+                    "DNSServerAddress": {
+                        "value": [
+                            "[variables('adNicIPAddress')]"
+                        ]
+                    }
+                }
+            }
+        }
+    ]
+}
