@@ -45,7 +45,7 @@
             }
         },
         "_artifactsLocation": {
-            "defaultValue": "https://github.com/NTT-DATA-Cloud-Transformation/azure-acp-public/PoCDemo/ActiveDirectory/master/",
+            "defaultValue": "https://raw.githubusercontent.com/NTT-DATA-Cloud-Transformation/azure-acp-public/master/",
             "type": "String",
             "metadata": {
                 "description": "The location of resources, such as templates and DSC modules, that the template depends on"
