@@ -22,13 +22,13 @@ parameters:
       displayName: Resource Group Name
       type: string
       default: hejazi03Pipeline
-    
-    trigger:
+
+trigger:
     - none
     
-    pool:
+pool:
       vmImage: ubuntu-latest
-    stages:
+stages:
     - stage: BuildInfra
       jobs:
       - job: ActiveDirectoryVM
