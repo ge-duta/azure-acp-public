@@ -2,7 +2,7 @@ parameters:
     - name: sc
       displayName: Service Connection Name
       type: string
-      default: FadelPrivateSP
+      default: ACP-SC-DevOps
     
     - name: loc
       displayName: Location
@@ -16,12 +16,12 @@ parameters:
     - name: sid
       displayName: Subscription ID
       type: string
-      default: a94f0758-94a8-426d-a3b6-aec6e83b51de
+      default: 38150324-5c71-42af-b409-0b011c15608f
     
     - name: rg
       displayName: Resource Group Name
       type: string
-      default: hejazi03Pipeline
+      default: hejazi04Pipeline
 
 trigger:
     - none
