@@ -1,9 +1,11 @@
-# azure-acp-public
-This is the public repo for ACP!!!!!!
+# Azure Team
+This is the public repo for the Automation Cloud Practice Project
 
 
 
 
+
+## Table of Contents
 
 Active Directory VM with a Domain Controller:
 - placeholder 
