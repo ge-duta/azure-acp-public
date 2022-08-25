@@ -1,5 +1,7 @@
 [![Build Status](https://dev.azure.com/CloudAutomationProject/Automation/_apis/build/status/Azure/NTT-DATA-Cloud-Transformation.azure-acp-public?branchName=master)](https://dev.azure.com/CloudAutomationProject/Automation/_build/latest?definitionId=30&branchName=master)
 
+https://dev.azure.com/CloudAutomationProject/Automation/_apis/build/status/Azure/NTT-DATA-Cloud-Transformation.azure-acp-public?branchName=master
+
 # Azure Team
 This is the public repo for the Automation Cloud Practice Project
 
