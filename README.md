@@ -26,7 +26,7 @@ NO. | CATEGORY | PURPOSE  | DEPLOY  | BUILD STATUS
     - placeholder
 
 4. Monitoring
-    - placeholder
-    - placeholder
+    - placeholder 1
+    - placeholder 2
 
 
