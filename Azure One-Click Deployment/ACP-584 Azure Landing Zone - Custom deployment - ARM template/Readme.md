@@ -17,7 +17,7 @@ Once permission is granted to other **users and service principals**, you can sa
 1.2 Open Azure Active Directory.
 
 1.3 Under _Manage_, select _Properties_.
-![AccessManagement](\Images\AzureLandingZone-customDeploy.png)
+![AccessManagement](Azure One-Click Deployment\ACP-584 Azure Landing Zone - Custom deployment - ARM template\Images\AzureLandingZone-customDeploy.png)
 
 1.4 Under _Access management for Azure resources_, set the toggle to Yes.
 
