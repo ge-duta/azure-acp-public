@@ -17,7 +17,7 @@ Once permission is granted to other **users and service principals**, you can sa
 1.2 Open Azure Active Directory.
 
 1.3 Under _Manage_, select _Properties_.
-![alt](/Images/AzureLandingZone-customDeploy.png)
+![AccessManagement](\Images\AzureLandingZone-customDeploy.png)
 
 1.4 Under _Access management for Azure resources_, set the toggle to Yes.
 
