@@ -2,6 +2,6 @@
 
 [General Documentation](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/landing-zone/)
 
-Deploy Azure Landing zones using:
-- ARM templates *No CI/CD
-- Terraform integrated with Azure DevOps
+## Deploy Azure Landing zones using:
+- [ARM templates *No CI/CD]()
+- [Terraform integrated with Azure DevOps]()
