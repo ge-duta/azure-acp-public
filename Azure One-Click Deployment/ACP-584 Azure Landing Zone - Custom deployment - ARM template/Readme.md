@@ -10,17 +10,19 @@
 2.3 Demo  
 ![Best Practice Check](https://azurequickstartsservice.blob.core.windows.net/badges/managementgroup-deployments/create-subscription/BestPracticeResult.svg)
 
-## 3. Deploy Enterprise-scale using ARM template <br/>
+## 3. Deploy Enterprise-scale using ARM custom template <br/>
 3.1 [![Deploy To Azure](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale%2Fmain%2Fdocs%2Freference%2Ftreyresearch%2FarmTemplates%2Fes-lite.json/createUIDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale%2Fmain%2Fdocs%2Freference%2Ftreyresearch%2FarmTemplates%2Fportal-es-lite.json)    
 3.2 Documentation  
 3.3 Demo  
 ![Best Practice Check](https://azurequickstartsservice.blob.core.windows.net/badges/managementgroup-deployments/create-subscription/BestPracticeResult.svg) 
 
 
-## 1. Permissions 
+## Permissions 
 User without correct permissions will receive:  
 ![User does't have enough access](./Images/donthaveauthorization.png)  <br/>
 
 Mitigation:
-Please provide full access to subscriptions and management group. [More Details](https://github.com/ge-duta/azure-acp-public/blob/master/Azure%20One-Click%20Deployment/ACP-584%20Azure%20Landing%20Zone%20-%20Custom%20deployment%20-%20ARM%20template/ConfigurePermissions.md)
-![Active Directory Access](./Images/donthaveauthorization.png)  <br/>
+a. Please provide full access to subscriptions and management group. [More Details](https://github.com/ge-duta/azure-acp-public/blob/master/Azure%20One-Click%20Deployment/ACP-584%20Azure%20Landing%20Zone%20-%20Custom%20deployment%20-%20ARM%20template/ConfigurePermissions.md)
+![Active Directory Access](./Images/ActiveDirectoryAccess.png)  <br/>
+
+b. Grant Access to User at root scope "/" using Azure Cloud Shell:
