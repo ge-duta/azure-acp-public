@@ -26,3 +26,8 @@ a. Please provide full access to subscriptions and management group. [More Detai
 ![Active Directory Access](./Images/ActiveDirectoryAccess.png)  <br/>
 
 b. Grant Access to User at root scope "/" using Azure Cloud Shell:
+
+```powershell
+New-AzRoleAssignment -Scope '/' -RoleDefinitionName 'Owner' -ObjectId "userObjecID from Azure AD"
+```
+![Root for User](./Images/owner-for-root-MG.png)  <br/>
