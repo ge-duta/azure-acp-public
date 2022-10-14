@@ -1,7 +1,7 @@
 ## 1. Azure landing zone accelerator using Azure Portal Cutom Template <br/>
 1.1 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template) > ![AccessManagement](./Images/AzureLandingZone.png)  <br/>
 1.2 [Documentation](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/scenarios/cloud-scale-analytics/tutorials/tutorial-create-data-landing-zone) / '[Json template](https://github.com/ge-duta/azure-acp-public/blob/master/Azure%20One-Click%20Deployment/ACP-584%20Azure%20Landing%20Zone%20-%20Custom%20deployment%20-%20ARM%20template/1.LandingZoneAzureARM.json) <br/>
-1.3 Demo/PPT  <br/>
+1.3 Demo/[PPT](https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FAzure%2520One-Click%2520Deployment%2FACP-584%2520Azure%2520Landing%2520Zone%2520-%2520Custom%2520deployment%2520-%2520ARM%2520template%2FACP-584%2520AZ%2520Landing%2520Zone%2520ARM.pptx&wdOrigin=BROWSELINK)  <br/>
 ![Best Practice Check](https://azurequickstartsservice.blob.core.windows.net/badges/managementgroup-deployments/create-subscription/BestPracticeResult.svg)
 
 ## 2. Microsoft Cloud Adoption Framework using Azure Blueprints <br/>
