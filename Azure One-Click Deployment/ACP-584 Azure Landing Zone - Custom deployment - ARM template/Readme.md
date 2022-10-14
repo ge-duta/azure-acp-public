@@ -22,10 +22,12 @@ User without correct permissions will receive:
 ![User does't have enough access](./Images/donthaveauthorization.png)  <br/>
 
 Mitigation:
-a. Please provide full access to subscriptions and management group. [More Details](https://github.com/ge-duta/azure-acp-public/blob/master/Azure%20One-Click%20Deployment/ACP-584%20Azure%20Landing%20Zone%20-%20Custom%20deployment%20-%20ARM%20template/ConfigurePermissions.md)
+a. Please use an identity that is local to the Azure AD, and not Guest user account due to known restrictions.
+![Member users](./Images/ADUsers.png)  <br/>
+b. Please provide full access to subscriptions and management group. [More Details](https://github.com/ge-duta/azure-acp-public/blob/master/Azure%20One-Click%20Deployment/ACP-584%20Azure%20Landing%20Zone%20-%20Custom%20deployment%20-%20ARM%20template/ConfigurePermissions.md)
 ![Active Directory Access](./Images/ActiveDirectoryAccess.png)  <br/>
 
-b. Grant Access to User at root scope "/" using Azure Cloud Shell:
+c. Grant Access to User at root scope "/" using Azure Cloud Shell:
 
 ```powershell
 New-AzRoleAssignment -Scope '/' -RoleDefinitionName 'Owner' -ObjectId "userObjecID from Azure AD"
