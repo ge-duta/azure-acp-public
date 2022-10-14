@@ -12,7 +12,7 @@
 
 ## 3. Deploy Enterprise-scale using ARM custom template <br/>
 3.1 [![Deploy To Azure](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale%2Fmain%2Fdocs%2Freference%2Ftreyresearch%2FarmTemplates%2Fes-lite.json/createUIDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale%2Fmain%2Fdocs%2Freference%2Ftreyresearch%2FarmTemplates%2Fportal-es-lite.json)    
-3.2 [Documentation](https://github.com/Azure/Enterprise-Scale/tree/main/docs/reference/treyresearch#readme)  
+3.2 [Documentation](https://github.com/Azure/Enterprise-Scale/tree/main/docs/reference/treyresearch#readme) / [Json Template](https://github.com/ge-duta/azure-acp-public/blob/master/Azure%20One-Click%20Deployment/ACP-584%20Azure%20Landing%20Zone%20-%20Custom%20deployment%20-%20ARM%20template/3.LandingZoneTemplateCustomARM.json)
 3.3 Demo/PPT  
 ![Best Practice Check](https://azurequickstartsservice.blob.core.windows.net/badges/managementgroup-deployments/create-subscription/BestPracticeResult.svg) 
 
