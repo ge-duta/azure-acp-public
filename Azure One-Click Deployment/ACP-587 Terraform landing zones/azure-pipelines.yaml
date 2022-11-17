@@ -1,15 +1,15 @@
 # Azure DevOps pipeline for Azure deployment
 
 variables:
-- group: terraform-tuesdays
+- group: AzureServicePrincipal
 
 trigger:
   branches:
     include:
     - main
-  #paths:
-   # include:
-    #- 2021-05-11-ADO/vnet
+  paths:
+   include:
+    - 'Azure One-Click Deployment/ACP-587 Terraform landing zones'
 
 stages:
 - stage: Validate
