@@ -1,0 +1,24 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resourceName": {
+            "value": "AV-EUS2-PPGZoneB"
+        },
+        "location": {
+            "value": "eastus2"
+        },
+        "platformFaultDomainCount": {
+            "value": 2
+        },
+        "platformUpdateDomainCount": {
+            "value": 5
+        },
+        "skuName": {
+            "value": "Aligned"
+        },
+        "proximityPlacementGroupId": {
+            "value": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEAST2-SAP-DEVTEST-RG/providers/Microsoft.Compute/proximityPlacementGroups/SAP4HANA-PPE-EUS2-ZoneB"
+        }
+    }
+}
