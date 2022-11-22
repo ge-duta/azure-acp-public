@@ -1,11 +1,13 @@
-$rg = "USEast2-SAP-devtest-rg"
+#update RG Name
+$rg = "RG-Name"
 New-AzResourceGroup -Name $rg -Location eastus2 -Force
 
+#-WhatIf to get the changes 
 New-AzResourceGroupDeployment `
     -Name 'eastus2-vnet' `
     -ResourceGroupName $rg `
-    -TemplateFile 'C:\Users\253342\OneDrive - NTT DATA Group\Clarios\ARM Templates - geduta\vnet-subnets ARM\vnet-template.json' `
-    -TemplateParameterFile 'C:\Users\253342\OneDrive - NTT DATA Group\Clarios\ARM Templates - geduta\vnet-subnets ARM\vnet-parameters.json' `
+    -TemplateFile '.\vnet-template.json' `
+    -TemplateParameterFile '.\vnet-parameters.json' `
     -Verbose `
     -WhatIf `
     -Confirm 
