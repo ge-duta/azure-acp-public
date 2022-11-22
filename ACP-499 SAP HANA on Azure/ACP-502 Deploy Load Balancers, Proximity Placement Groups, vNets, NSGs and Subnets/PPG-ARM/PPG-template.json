@@ -1,0 +1,25 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "ppgName": {
+            "type": "string",
+            "defaultValue": "SAP4HANA-PPE-EUS2-ZoneA"
+            
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "eastus2"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "apiVersion": "2019-03-01",
+            "type": "Microsoft.Compute/proximityPlacementGroups",
+            "name": "[parameters('ppgName')]",
+            "location": "[parameters('location')]"
+        }
+    ],
+    "outputs": {}
+}
