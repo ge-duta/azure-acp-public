@@ -1,0 +1,75 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "eastus2"
+        },
+        "extendedLocation": {
+            "value": {}
+        },
+        "virtualNetworkName": {
+            "value": "useast2dev-testvnet"
+        },
+        "resourceGroup": {
+            "value": "USEast2-SAP-devtest-rg"
+        },
+        "addressSpaces": {
+            "value": [
+                "10.75.0.0/16",
+                "192.168.0.0/16"
+            ]
+        },
+        "ipv6Enabled": {
+            "value": false
+        },
+        "subnetCount": {
+            "value": 6
+        },
+        "subnet0_name": {
+            "value": "useast2dev-sapapp"
+        },
+        "subnet0_addressRange": {
+            "value": "10.75.101.0/27"
+        },
+        "subnet1_name": {
+            "value": "useast2dev-saphana"
+        },
+        "subnet1_addressRange": {
+            "value": "192.168.1.0/24"
+        },
+        "subnet2_name": {
+            "value": "useast2dev-sapnfs"
+        },
+        "subnet2_addressRange": {
+            "value": "192.168.2.0/24"
+        },
+        "subnet3_name": {
+            "value": "HANA-DB-subnet"
+        },
+        "subnet3_addressRange": {
+            "value": "10.75.3.0/24"
+        },
+        "subnet4_name": {
+            "value": "useast2-sapHA1"
+        },
+        "subnet4_addressRange": {
+            "value": "192.168.3.0/24"
+        },
+        "subnet5_name": {
+            "value": "useast2-sapHA2"
+        },
+        "subnet5_addressRange": {
+            "value": "192.168.4.0/24"
+        },
+        "ddosProtectionPlanEnabled": {
+            "value": false
+        },
+        "firewallEnabled": {
+            "value": false
+        },
+        "bastionEnabled": {
+            "value": false
+        }
+    }
+}
