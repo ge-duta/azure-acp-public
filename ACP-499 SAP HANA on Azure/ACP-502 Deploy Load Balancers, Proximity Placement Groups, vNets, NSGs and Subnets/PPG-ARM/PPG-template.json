@@ -10,6 +10,19 @@
         "location": {
             "type": "string",
             "defaultValue": "eastus2"
+        },
+        "tagsByResource": {
+            "type": "object",
+            "defaultValue": {
+                    "Application ": "SAP-HANA-DEVTest",
+                    "SystemID ": "SAP",
+                    "Creator": "Owner",
+                    "CreationDate ": "[utcNow('yyyy-MM-dd')]",
+                    "Environment ": "dev"
+                            },
+            "metadata": {
+                "description": "Optional tags provided by the user via createUiDefinition.json"
+            }
         }
     },
     "variables": {},
@@ -18,7 +31,8 @@
             "apiVersion": "2019-03-01",
             "type": "Microsoft.Compute/proximityPlacementGroups",
             "name": "[parameters('ppgName')]",
-            "location": "[parameters('location')]"
+            "location": "[parameters('location')]",
+            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.Compute/proximityPlacementGroups'), parameters('tagsByResource')['Microsoft.Compute/proximityPlacementGroups'], json('{}')) ]"
         }
     ],
     "outputs": {}
