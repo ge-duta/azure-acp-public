@@ -36,7 +36,7 @@
             "value": "Detach"
         },
         "virtualMachineSize": {
-            "value": "Standard_E2bs_v5"
+            "value": "Standard_E8ds_v4"
         },
         "nicDeleteOption": {
             "value": "Detach"
@@ -49,6 +49,12 @@
         },
         "zone": {
             "value": "1"
+        },
+        "tagsByResource": {
+            "value": {
+                    "Owner": "Geoo"
+                }
+            }
         }
     }
 }

@@ -9,10 +9,8 @@
             "value": "SAP4HANA-PPE-EUS2-ZoneA"
         },
         "tagsByResource": {
-            "value": {
-                "Microsoft.Compute/proximityPlacementGroups": {
-                    "Owner": "Duta, George"
-                }
+            "value": {                    
+                "Owner": "Duta, George"
             }
         }
     }

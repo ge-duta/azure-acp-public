@@ -6,6 +6,10 @@
             "type": "string",
             "defaultValue": "eastus2"
         },
+        "zone": {
+            "type": "System.String",
+            "defaultValue": "1"
+        },
         "virtualMachineName": {
             "type": "string",
             "defaultValue": "sapdevtest-jumpserver-vm01"
@@ -18,12 +22,9 @@
             "type": "secureString",
             "defaultValue": ""
         },
-        "zone": {
-            "type": "string",
-            "defaultValue": "1"
-        },
         "virtualMachineSize": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "Standard_E8ds_v4"
         },
         "virtualNetworkId": {
             "type": "string",
@@ -40,6 +41,19 @@
         "privateIP": {
             "type": "string",
             "defaultValue": "10.75.101.234"
+        },
+        "tagsByResource": {
+            "type": "object",
+            "defaultValue": {
+                    "Application ": "SAP-HANA-DEVTest",
+                    "SystemID ": "SAP",
+                    "Creator": "Owner",
+                    "CreationDate ": "[utcNow('yyyy-MM-dd')]",
+                    "Environment ": "dev"
+                            },
+            "metadata": {
+                "description": "Optional tags provided by the user via createUiDefinition.json"
+            }
         }
     },
     "variables": {
@@ -128,9 +142,7 @@
                     }
                 }
             },
-            "tags": {
-                "Environment": "DEV"
-            },
+            "tags": "[parameters('tagsByResource')]",
             "zones": "[parameters('zone')]"
         }
     ],
