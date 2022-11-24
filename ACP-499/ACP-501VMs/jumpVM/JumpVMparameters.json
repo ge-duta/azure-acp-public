@@ -1,0 +1,54 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "eastus2"
+        },
+        "networkInterfaceName1": {
+            "value": "sapdevtest-jumpserver-vm01-nic1"
+        },
+        "enableAcceleratedNetworking": {
+            "value": true
+        },
+        "subnetName": {
+            "value": "useast2dev-sapapp"
+        },
+        "virtualNetworkId": {
+            "value": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet"
+        },
+        "virtualMachineName": {
+            "value": "sapdevtest-jumpserver-vm01"
+        },
+        "virtualMachineName1": {
+            "value": "sapdevtest-jumpserver-vm01"
+        },
+        "virtualMachineComputerName1": {
+            "value": "sapdevtest-jumpserver-vm01"
+        },
+        "virtualMachineRG": {
+            "value": "USEast2-SAP-devtest-rg"
+        },
+        "osDiskType": {
+            "value": "Premium_LRS"
+        },
+        "osDiskDeleteOption": {
+            "value": "Detach"
+        },
+        "virtualMachineSize": {
+            "value": "Standard_E2bs_v5"
+        },
+        "nicDeleteOption": {
+            "value": "Detach"
+        },
+        "adminUsername": {
+            "value": "azureadmin"
+        },
+        "adminPassword": {
+            "value": ""
+        },
+        "zone": {
+            "value": "1"
+        }
+    }
+}
