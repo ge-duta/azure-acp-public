@@ -6,51 +6,40 @@
             "type": "string",
             "defaultValue": "eastus2"
         },
-        "networkInterfaceName1": {
-            "type": "string",
-            "defaultValue": "sapdevtest-jumpserver-vm01-nic1"
-        },
-        "enableAcceleratedNetworking": {
-            "type": "bool",
-            "defaultValue": "true"
-        },
-        "subnetName": {
-            "type": "string",
-            "defaultValue": "useast2dev-sapapp"
-        },
-        "virtualNetworkId": {
-            "type": "string",
-            "defaultValue": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet"
-        },
         "virtualMachineName": {
             "type": "string",
             "defaultValue": "sapdevtest-jumpserver-vm01"
         },
-        "virtualMachineComputerName1": {
-            "type": "string",
-            "defaultValue": "sapdevtest-jumpserver-vm01"
-        },
-        "osDiskType": {
-            "type": "string"
-        },
-        "osDiskDeleteOption": {
-            "type": "string"
-        },
-        "virtualMachineSize": {
-            "type": "string"
-        },
-        "nicDeleteOption": {
-            "type": "string"
-        },
         "adminUsername": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "azureadmin"
         },
         "adminPassword": {
             "type": "secureString",
             "defaultValue": ""
         },
         "zone": {
+            "type": "string",
+            "defaultValue": "1"
+        },
+        "virtualMachineSize": {
             "type": "string"
+        },
+        "virtualNetworkId": {
+            "type": "string",
+            "defaultValue": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet"
+        },
+        "networkInterfaceName1": {
+            "type": "string",
+            "defaultValue": "sapdevtest-jumpserver-vm01-nic1"
+        },
+        "subnetName": {
+            "type": "string",
+            "defaultValue": "useast2dev-sapapp"
+        },
+        "privateIP": {
+            "type": "string",
+            "defaultValue": "10.75.101.234"
         }
     },
     "variables": {
@@ -73,11 +62,14 @@
                             "subnet": {
                                 "id": "[variables('subnetRef')]"
                             },
-                            "privateIPAllocationMethod": "Dynamic"
+                            "privateIPAllocationMethod": "Static",
+                            "privateIPAddress": "[parameters('privateIP')]",
+                            "primary":true,
+                            "enableAcceleratedNetworking": true
                         }
                     }
                 ],
-                "enableAcceleratedNetworking": "[parameters('enableAcceleratedNetworking')]"
+                "enableAcceleratedNetworking": "true"
             },
             "tags": {
                 "Environment": "DEV"
@@ -99,9 +91,9 @@
                     "osDisk": {
                         "createOption": "fromImage",
                         "managedDisk": {
-                            "storageAccountType": "[parameters('osDiskType')]"
+                            "storageAccountType": "Premium_LRS"
                         },
-                        "deleteOption": "[parameters('osDiskDeleteOption')]"
+                        "deleteOption": "Detach"
                     },
                     "imageReference": {
                         "publisher": "redhat",
@@ -115,13 +107,13 @@
                         {
                             "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceName1'))]",
                             "properties": {
-                                "deleteOption": "[parameters('nicDeleteOption')]"
+                                "deleteOption": "Detach"
                             }
                         }
                     ]
                 },
                 "osProfile": {
-                    "computerName": "[parameters('virtualMachineComputerName1')]",
+                    "computerName": "[parameters('virtualMachineName')]",
                     "adminUsername": "[parameters('adminUsername')]",
                     "adminPassword": "[parameters('adminPassword')]",
                     "linuxConfiguration": {
