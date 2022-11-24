@@ -41,7 +41,12 @@
         "privateIP": {
             "type": "string",
             "defaultValue": "10.75.101.10"
+        },
+        "resourcetag": {
+            "type": "string",
+            "defaultValue": "jumpVM"
         }
+
     },
     "variables": {
         "vnetId": "[parameters('virtualNetworkId')]",
@@ -71,7 +76,7 @@
                 "enableAcceleratedNetworking": "true"
             },
             "tags": {
-                "Environment": "DEV"
+                "resource": "[parameters('resourcetag')]"
             }
         },
         {
@@ -127,6 +132,7 @@
                     }
                 }
             },
+            "tags": {"Resource": "[parameters('ResourceTag')]"},
             "zones": ["[parameters('zone')]"]
         }
     ],
