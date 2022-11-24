@@ -1,0 +1,667 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "SID": {
+      "defaultValue": "vi1",
+      "type": "String"
+    },
+    "Username": {
+      "defaultValue": "azureuser",
+      "type": "String"
+    },
+    "Password": {
+      "defaultValue": "",
+      "type": "SecureString"
+    },
+    "PublicKey": {
+      "defaultValue": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDcX6rz7CsaomoBAB0YCOCCmzKc8j4Vj8vIDwTggNmUkFzbkLggoiN405T/PkiWu7pftFfeM65TzG37Bm5dDUNfd3D6514qmo+sr/N9Q+TtZ68BBxbiPKDVRy+W4m971OxAXATVvBilnNXWDCT4O4CmX5fi9an9uLdrQzTZpbQGxXaZCYVzzQqBRmXY9hNygXjUVVXJ+vfGHjoAIDpiEJF+niBlkln7FekddsPIDzc6Nx3NlqAJL27MF2Nzc6bveDFMmUEpefwgNuXHbY7xEZXuwoWsIDHYKk2hiB5Mm7nVMw0zVRQB/XaNBk/+rtAeLVUiDuwnnkBAZ+ClgPxY2ZkDv6CWpT11PITB7kjs7Y2HdwBH2HZ0ZBHiYTwDKsHTe6G9qmxEEQ8fqTButbaj+d4vQzikZIJrTdZEKlTP7uaIclQ5L4wSNFo5mCTwlsAvx2AYqI2/VbCPaJKEtlr+hINLeSCX8Lh82R8ls8euogSA4AYiGM0X9LvzlgkzIoKuYgE= generated-by-azure",
+      "type": "SecureString"
+    },
+    "OSOffer": {
+      "defaultValue": "RHEL-SAP-HA",
+      "type": "String"
+    },
+    "OSPublisher": {
+      "defaultValue": "RedHat",
+      "type": "String"
+    },
+    "OSSku": {
+      "defaultValue": "82sapha-gen2",
+      "type": "String"
+    },
+    "OSVersion": {
+      "defaultValue": "8.2.2021091202",
+      "type": "String"
+    },
+    "Location": {
+      "defaultValue": "eastus",
+      "type": "String"
+    },
+    "SubnetId": {
+      "defaultValue": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/SAP-VIS-eastUS/providers/Microsoft.Network/virtualNetworks/SAP-VIS-eastus-vnet/subnets/default",
+      "type": "String"
+    },
+    "VmSize": {
+      "defaultValue": "Standard_E4ds_v4",
+      "type": "String"
+    },
+    "AvZoneA": {
+      "defaultValue": 1,
+      "type": "Int"
+    },
+    "AvZoneB": {
+      "defaultValue": 2,
+      "type": "Int"
+    },
+    "OsDiskSku": {
+      "defaultValue": "StandardSSD_LRS",
+      "type": "String"
+    },
+    "StorageAccountName": {
+      "defaultValue": "vi1nfs73ea458fef13420",
+      "type": "String"
+    },
+    "Environment": {
+      "defaultValue": "nonprod",
+      "type": "String"
+    },
+    "SecondIpOnNic": {
+      "defaultValue": false,
+      "type": "Bool"
+    },
+    "ResourceTags": {
+      "defaultValue": {},
+      "type": "Object"
+    },
+    "ResourceTagsWithCost": {
+      "defaultValue": {
+        "costanalysis-parent": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/SAP-VIS-eastUS/providers/Microsoft.Workloads/sapVirtualInstances/VI1"
+      },
+      "type": "Object"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Network/networkInterfaces",
+      "apiVersion": "2020-11-01",
+      "name": "[concat(parameters('SID'), '-ASCS-ZoneA-Nic')]",
+      "location": "[parameters('Location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', concat(parameters('SID'), '-AscsLoadBalancerFrontendIpStatic'))]"
+      ],
+      "properties": {
+        "enableAcceleratedNetworking": true,
+        "copy": [
+          {
+            "count": "[if(parameters('SecondIpOnNic'), 2, 1)]",
+            "name": "ipConfigurations",
+            "input": {
+              "name": "[concat('ipconfig', copyIndex('ipConfigurations'))]",
+              "properties": {
+                "primary": "[if(equals(copyIndex('ipConfigurations'), 0), bool('true'), bool('false'))]",
+                "privateIPAllocationMethod": "Dynamic",
+                "subnet": {
+                  "id": "[parameters('SubnetId')]"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2021-04-01",
+      "name": "[concat(parameters('SID'), '-NicIpAddressStaticForAscsZoneA')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('SID'), '-ASCS-ZoneA-Nic'))]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "expressionEvaluationOptions": {
+          "scope": "Inner"
+        },
+        "parameters": {
+          "SID": {
+            "value": "[parameters('SID')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "subnetId": {
+            "value": "[parameters('subnetId')]"
+          },
+          "ResourceTags": {
+            "value": "[parameters('ResourceTags')]"
+          },
+          "networkInterface": {
+            "value": "[reference(resourceId('Microsoft.Network/networkInterfaces', concat(parameters('SID'), '-ASCS-ZoneA-Nic')))]"
+          },
+          "SecondIpOnNic": {
+            "value": "[parameters('SecondIpOnNic')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "parameters": {
+            "SID": {
+              "type": "string"
+            },
+            "location": {
+              "type": "string"
+            },
+            "subnetId": {
+              "type": "string"
+            },
+            "ResourceTags": {
+              "type": "object"
+            },
+            "networkInterface": {
+              "type": "object"
+            },
+            "SecondIpOnNic": {
+              "type": "bool"
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Network/networkInterfaces",
+              "apiVersion": "2020-11-01",
+              "name": "[concat(parameters('SID'), '-ASCS-ZoneA-Nic')]",
+              "location": "[parameters('Location')]",
+              "tags": "[parameters('ResourceTags')]",
+              "properties": {
+                "enableAcceleratedNetworking": true,
+                "copy": [
+                  {
+                    "count": "[if(parameters('SecondIpOnNic'), 2, 1)]",
+                    "name": "ipConfigurations",
+                    "input": {
+                      "name": "[concat('ipconfig', copyIndex('ipConfigurations'))]",
+                      "properties": {
+                        "primary": "[if(equals(copyIndex('ipConfigurations'), 0), bool('true'), bool('false'))]",
+                        "privateIPAddress": "[parameters('networkInterface').ipConfigurations[copyIndex('ipConfigurations')].properties.privateIPAddress]",
+                        "privateIPAllocationMethod": "Static",
+                        "subnet": {
+                          "id": "[parameters('SubnetId')]"
+                        },
+                        "loadBalancerBackendAddressPools": [
+                          {
+                            "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', concat(parameters('SID'), '-ASCS-loadBalancer'), 'backend')]"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Network/networkInterfaces",
+      "apiVersion": "2020-11-01",
+      "name": "[concat(parameters('SID'), '-ASCS-ZoneB-Nic')]",
+      "location": "[parameters('Location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', concat(parameters('SID'), '-AscsLoadBalancerFrontendIpStatic'))]"
+      ],
+      "properties": {
+        "enableAcceleratedNetworking": true,
+        "copy": [
+          {
+            "count": "[if(parameters('SecondIpOnNic'), 2, 1)]",
+            "name": "ipConfigurations",
+            "input": {
+              "name": "[concat('ipconfig', copyIndex('ipConfigurations'))]",
+              "properties": {
+                "primary": "[if(equals(copyIndex('ipConfigurations'), 0), bool('true'), bool('false'))]",
+                "privateIPAllocationMethod": "Dynamic",
+                "subnet": {
+                  "id": "[parameters('SubnetId')]"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2021-04-01",
+      "name": "[concat(parameters('SID'), '-NicIpAddressStaticForAscsZoneB')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('SID'), '-ASCS-ZoneB-Nic'))]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "expressionEvaluationOptions": {
+          "scope": "Inner"
+        },
+        "parameters": {
+          "SID": {
+            "value": "[parameters('SID')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "subnetId": {
+            "value": "[parameters('subnetId')]"
+          },
+          "ResourceTags": {
+            "value": "[parameters('ResourceTags')]"
+          },
+          "networkInterface": {
+            "value": "[reference(resourceId('Microsoft.Network/networkInterfaces', concat(parameters('SID'), '-ASCS-ZoneB-Nic')))]"
+          },
+          "SecondIpOnNic": {
+            "value": "[parameters('SecondIpOnNic')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "parameters": {
+            "SID": {
+              "type": "string"
+            },
+            "location": {
+              "type": "string"
+            },
+            "subnetId": {
+              "type": "string"
+            },
+            "ResourceTags": {
+              "type": "object"
+            },
+            "networkInterface": {
+              "type": "object"
+            },
+            "SecondIpOnNic": {
+              "type": "bool"
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Network/networkInterfaces",
+              "apiVersion": "2020-11-01",
+              "name": "[concat(parameters('SID'), '-ASCS-ZoneB-Nic')]",
+              "location": "[parameters('Location')]",
+              "tags": "[parameters('ResourceTags')]",
+              "properties": {
+                "enableAcceleratedNetworking": true,
+                "copy": [
+                  {
+                    "count": "[if(parameters('SecondIpOnNic'), 2, 1)]",
+                    "name": "ipConfigurations",
+                    "input": {
+                      "name": "[concat('ipconfig', copyIndex('ipConfigurations'))]",
+                      "properties": {
+                        "primary": "[if(equals(copyIndex('ipConfigurations'), 0), bool('true'), bool('false'))]",
+                        "privateIPAddress": "[parameters('networkInterface').ipConfigurations[copyIndex('ipConfigurations')].properties.privateIPAddress]",
+                        "privateIPAllocationMethod": "Static",
+                        "subnet": {
+                          "id": "[parameters('SubnetId')]"
+                        },
+                        "loadBalancerBackendAddressPools": [
+                          {
+                            "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', concat(parameters('SID'), '-ASCS-loadBalancer'), 'backend')]"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines",
+      "apiVersion": "2021-03-01",
+      "name": "[concat(parameters('SID'), 'ascszavm')]",
+      "location": "[parameters('Location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('SID'), '-ASCS-ZoneA-Nic'))]"
+      ],
+      "tags": "[parameters('ResourceTagsWithCost')]",
+      "zones": [
+        "[parameters('AvZoneA')]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('VmSize')]"
+        },
+        "osProfile": {
+          "computerName": "[concat(parameters('SID'), 'ascszavm')]",
+          "adminUsername": "[parameters('Username')]",
+          "adminPassword": "[parameters('Password')]",
+          "linuxConfiguration": {
+            "disablePasswordAuthentication": true,
+            "ssh": {
+              "publicKeys": [
+                {
+                  "path": "[concat('/home/', parameters('Username'), '/.ssh/authorized_keys')]",
+                  "keyData": "[parameters('PublicKey')]"
+                }
+              ]
+            }
+          }
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[parameters('OSPublisher')]",
+            "offer": "[parameters('OSOffer')]",
+            "sku": "[parameters('OSSku')]",
+            "version": "[parameters('OSVersion')]"
+          },
+          "osDisk": {
+            "createOption": "FromImage",
+            "diskSizeGB": 64,
+            "managedDisk": {
+              "storageAccountType": "[parameters('OsDiskSku')]"
+            }
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('SID'), '-ASCS-ZoneA-Nic'))]"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines",
+      "apiVersion": "2021-03-01",
+      "name": "[concat(parameters('SID'), 'ascszbvm')]",
+      "location": "[parameters('Location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('SID'), '-ASCS-ZoneB-Nic'))]"
+      ],
+      "tags": "[parameters('ResourceTagsWithCost')]",
+      "zones": [
+        "[parameters('AvZoneB')]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('VmSize')]"
+        },
+        "osProfile": {
+          "computerName": "[concat(parameters('SID'), 'ascszbvm')]",
+          "adminUsername": "[parameters('Username')]",
+          "adminPassword": "[parameters('Password')]",
+          "linuxConfiguration": {
+            "disablePasswordAuthentication": true,
+            "ssh": {
+              "publicKeys": [
+                {
+                  "path": "[concat('/home/', parameters('Username'), '/.ssh/authorized_keys')]",
+                  "keyData": "[parameters('PublicKey')]"
+                }
+              ]
+            }
+          }
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[parameters('OSPublisher')]",
+            "offer": "[parameters('OSOffer')]",
+            "sku": "[parameters('OSSku')]",
+            "version": "[parameters('OSVersion')]"
+          },
+          "osDisk": {
+            "createOption": "FromImage",
+            "diskSizeGB": 64,
+            "managedDisk": {
+              "storageAccountType": "[parameters('OsDiskSku')]"
+            }
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('SID'), '-ASCS-ZoneB-Nic'))]"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Network/loadBalancers",
+      "apiVersion": "2020-06-01",
+      "name": "[concat(parameters('SID'), '-ASCS-loadBalancer')]",
+      "location": "[parameters('Location')]",
+      "sku": {
+        "name": "Standard"
+      },
+      "properties": {
+        "frontendIPConfigurations": [
+          {
+            "name": "frontend.ASCS",
+            "properties": {
+              "subnet": {
+                "id": "[parameters('SubnetId')]"
+              },
+              "privateIPAllocationMethod": "Dynamic"
+            }
+          },
+          {
+            "name": "frontend.ERS",
+            "properties": {
+              "subnet": {
+                "id": "[parameters('SubnetId')]"
+              },
+              "privateIPAllocationMethod": "Dynamic"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2021-04-01",
+      "name": "[concat(parameters('SID'), '-AscsLoadBalancerFrontendIpStatic')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/loadBalancers', concat(parameters('SID'), '-ASCS-loadBalancer'))]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "resources": [
+            {
+              "type": "Microsoft.Network/loadBalancers",
+              "apiVersion": "2020-06-01",
+              "name": "[concat(parameters('SID'), '-ASCS-loadBalancer')]",
+              "location": "[parameters('location')]",
+              "tags": "[parameters('ResourceTagsWithCost')]",
+              "sku": {
+                "name": "Standard"
+              },
+              "properties": {
+                "frontendIPConfigurations": [
+                  {
+                    "name": "frontend.ASCS",
+                    "properties": {
+                      "subnet": {
+                        "id": "[parameters('SubnetId')]"
+                      },
+                      "privateIPAllocationMethod": "Static",
+                      "privateIPAddress": "[reference(resourceId('Microsoft.Network/loadBalancers', concat(parameters('SID'), '-ASCS-loadBalancer'))).frontendIPConfigurations[0].properties.privateIPAddress]"
+                    }
+                  },
+                  {
+                    "name": "frontend.ERS",
+                    "properties": {
+                      "subnet": {
+                        "id": "[parameters('SubnetId')]"
+                      },
+                      "privateIPAllocationMethod": "Static",
+                      "privateIPAddress": "[reference(resourceId('Microsoft.Network/loadBalancers', concat(parameters('SID'), '-ASCS-loadBalancer'))).frontendIPConfigurations[1].properties.privateIPAddress]"
+                    }
+                  }
+                ],
+                "backendAddressPools": [
+                  {
+                    "name": "backend"
+                  }
+                ],
+                "probes": [
+                  {
+                    "name": "health.ASCS",
+                    "properties": {
+                      "protocol": "Tcp",
+                      "port": 62000,
+                      "intervalInSeconds": 5,
+                      "numberOfProbes": 2
+                    }
+                  },
+                  {
+                    "name": "health.ERS",
+                    "properties": {
+                      "protocol": "Tcp",
+                      "port": 62101,
+                      "intervalInSeconds": 5,
+                      "numberOfProbes": 2
+                    }
+                  }
+                ],
+                "loadBalancingRules": [
+                  {
+                    "Name": "lb.ASCS",
+                    "properties": {
+                      "frontendIPConfiguration": {
+                        "id": "[resourceId('Microsoft.Network/loadBalancers/frontendIpConfigurations', concat(parameters('SID'), '-ASCS-loadBalancer'), 'frontend.ASCS')]"
+                      },
+                      "backendAddressPool": {
+                        "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', concat(parameters('SID'), '-ASCS-loadBalancer'), 'backend')]"
+                      },
+                      "probe": {
+                        "id": "[resourceId('Microsoft.Network/loadBalancers/probes', concat(parameters('SID'), '-ASCS-loadBalancer'), 'health.ASCS')]"
+                      },
+                      "frontendPort": 0,
+                      "backendPort": 0,
+                      "protocol": "All",
+                      "enableFloatingIP": true
+                    }
+                  },
+                  {
+                    "Name": "lb.ERS",
+                    "properties": {
+                      "frontendIPConfiguration": {
+                        "id": "[resourceId('Microsoft.Network/loadBalancers/frontendIpConfigurations', concat(parameters('SID'), '-ASCS-loadBalancer'), 'frontend.ERS')]"
+                      },
+                      "backendAddressPool": {
+                        "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', concat(parameters('SID'), '-ASCS-loadBalancer'), 'backend')]"
+                      },
+                      "probe": {
+                        "id": "[resourceId('Microsoft.Network/loadBalancers/probes', concat(parameters('SID'), '-ASCS-loadBalancer'), 'health.ERS')]"
+                      },
+                      "frontendPort": 0,
+                      "backendPort": 0,
+                      "protocol": "All",
+                      "enableFloatingIP": true
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2021-04-01",
+      "name": "[parameters('StorageAccountName')]",
+      "location": "[parameters('Location')]",
+      "tags": "[parameters('ResourceTags')]",
+      "sku": {
+        "name": "Premium_ZRS"
+      },
+      "kind": "FileStorage",
+      "properties": {
+        "allowBlobPublicAccess": false,
+        "minimumTlsVersion": "TLS1_2",
+        "networkAcls": {
+          "defaultAction": "Deny"
+        },
+        "supportsHttpsTrafficOnly": false
+      }
+    },
+    {
+      "type": "Microsoft.Network/privateEndpoints",
+      "apiVersion": "2020-07-01",
+      "name": "[concat(parameters('StorageAccountName'), '_pe')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('StorageAccountName'))]"
+      ],
+      "tags": "[parameters('ResourceTags')]",
+      "properties": {
+        "privateLinkServiceConnections": [
+          {
+            "name": "[concat(parameters('StorageAccountName'), '_pe')]",
+            "properties": {
+              "privateLinkServiceId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('StorageAccountName'))]",
+              "groupIds": [
+                "file"
+              ]
+            }
+          }
+        ],
+        "subnet": {
+          "id": "[parameters('SubnetId')]"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/fileServices/shares",
+      "apiVersion": "2019-06-01",
+      "name": "[concat(parameters('storageAccountName'), '/default/', 'sap', parameters('SID'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+      ],
+      "properties": {
+        "enabledProtocols": "NFS",
+        "rootSquash": "NoRootSquash",
+        "shareQuota": 256
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/fileServices/shares",
+      "apiVersion": "2019-06-01",
+      "name": "[concat(parameters('storageAccountName'), '/default/', 'usrsaptrans', parameters('Environment'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+      ],
+      "properties": {
+        "enabledProtocols": "NFS",
+        "rootSquash": "NoRootSquash",
+        "shareQuota": 128
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/fileServices/shares",
+      "apiVersion": "2019-06-01",
+      "name": "[concat(parameters('storageAccountName'), '/default/', 'sapmedia')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+      ],
+      "properties": {
+        "enabledProtocols": "NFS",
+        "rootSquash": "NoRootSquash",
+        "shareQuota": 128
+      }
+    }
+  ]
+}

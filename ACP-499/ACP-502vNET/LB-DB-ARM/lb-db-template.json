@@ -1,0 +1,104 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "type": "string",
+            "defaultValue": "lb-HANADB-EUS2-test"
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "eastus2"
+        },
+        "sku": {
+            "type": "string",
+            "defaultValue": "Standard"
+        },
+        "tier": {
+            "type": "string",
+            "defaultValue": "Regional"
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2020-11-01",
+            "name": "[parameters('name')]",
+            "type": "Microsoft.Network/loadBalancers",
+            "location": "[parameters('location')]",
+            "dependsOn": [],
+            "tags": {
+                "Application": "SAP",
+                "Environment": "DEV"
+            },
+            "properties": {
+                "frontendIPConfigurations": [
+                    {
+                        "name": "frontend",
+                        "properties": {
+                            "privateIPAddress": "192.168.1.10",
+                            "privateIPAddressVersion": "IPv4",
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet/subnets/useast2dev-saphana"
+                            }
+                        },
+                        "zones": [
+                            "2",
+                            "3",
+                            "1"
+                        ]
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "backend"
+                    }
+                ],
+                "probes": [
+                    {
+                        "name": "health.DB",
+                        "properties": {
+                            "protocol": "Tcp",
+                            "port": 65500,
+                            "requestPath": null,
+                            "intervalInSeconds": 5,
+                            "numberOfProbes": 1
+                        }
+                    }
+                ],
+                "loadBalancingRules": [
+                    {
+                        "name": "lb-DB",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/loadBalancers/lb-HANADB-EUS2-test/frontendIPConfigurations/frontend"
+                            },
+                            "frontendPort": 0,
+                            "backendPort": 0,
+                            "enableFloatingIP": true,
+                            "idleTimeoutInMinutes": 4,
+                            "protocol": "All",
+                            "loadDistribution": "Default",
+                            "probe": {
+                                "id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/loadBalancers/lb-HANADB-EUS2-test/probes/health.DB"
+                            },
+                            "disableOutboundSnat": true,
+                            "enableTcpReset": false,
+                            "backendAddressPools": [
+                                {
+                                    "id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/loadBalancers/lb-HANADB-EUS2-test/backendAddressPools/backend"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "inboundNatRules": [],
+                "outboundRules": []
+            },
+            "sku": {
+                "name": "[parameters('sku')]",
+                "tier": "[parameters('tier')]"
+            }
+        }
+    ]
+}

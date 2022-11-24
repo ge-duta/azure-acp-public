@@ -1,0 +1,38 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+            "location": {
+            "type": "string",
+            "defaultValue": "eastus2"
+        },
+        "ppgName": {
+            "type": "string",
+            "defaultValue": "SAP4HANA-PPE-EUS2-ZoneA"
+        },
+        "tagsByResource": {
+            "type": "object",
+            "defaultValue": {
+                    "Application ": "SAP-HANA-DEVTest",
+                    "SystemID ": "SAP",
+                    "Creator": "Owner",
+                    "CreationDate ": "[utcNow('yyyy-MM-dd')]",
+                    "Environment ": "dev"
+                            },
+            "metadata": {
+                "description": "Optional tags provided by the user via createUiDefinition.json"
+            }
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "apiVersion": "2019-03-01",
+            "type": "Microsoft.Compute/proximityPlacementGroups",
+            "name": "[parameters('ppgName')]",
+            "location": "[parameters('location')]",
+            "tags": "[parameters('tagsByResource')]"
+        }
+    ],
+    "outputs": {}
+}
