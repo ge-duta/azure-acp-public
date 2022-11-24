@@ -37,19 +37,6 @@
         "privateIP": {
             "type": "string",
             "defaultValue": "10.75.101.234"
-        },
-        "tagsByResource": {
-            "type": "object",
-            "defaultValue": {
-                    "Application ": "SAP-HANA-DEVTest",
-                    "SystemID ": "SAP",
-                    "Creator": "Owner",
-                    "CreationDate ": "[utcNow('yyyy-MM-dd')]",
-                    "Environment ": "dev"
-                            },
-            "metadata": {
-                "description": "Optional tags provided by the user via createUiDefinition.json"
-            }
         }
     },
     "variables": {
@@ -138,7 +125,6 @@
                     }
                 }
             },
-            "tags": "[parameters('tagsByResource')]",
             "zones": ["1"]
         }
     ],
