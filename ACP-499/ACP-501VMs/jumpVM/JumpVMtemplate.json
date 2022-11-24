@@ -6,10 +6,6 @@
             "type": "string",
             "defaultValue": "eastus2"
         },
-        "zone": {
-            "type": "System.String",
-            "defaultValue": "1"
-        },
         "virtualMachineName": {
             "type": "string",
             "defaultValue": "sapdevtest-jumpserver-vm01"
@@ -143,7 +139,7 @@
                 }
             },
             "tags": "[parameters('tagsByResource')]",
-            "zones": "1"
+            "zones": ["1"]
         }
     ],
     "outputs": {
