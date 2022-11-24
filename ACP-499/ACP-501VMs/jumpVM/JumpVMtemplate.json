@@ -6,6 +6,10 @@
             "type": "string",
             "defaultValue": "eastus2"
         },
+        "zone": {
+            "type": "string",
+            "defaultValue": "1"
+        },
         "virtualMachineName": {
             "type": "string",
             "defaultValue": "sapdevtest-jumpserver-vm01"
@@ -36,7 +40,7 @@
         },
         "privateIP": {
             "type": "string",
-            "defaultValue": "10.75.101.234"
+            "defaultValue": "10.75.101.10"
         }
     },
     "variables": {
@@ -60,9 +64,7 @@
                                 "id": "[variables('subnetRef')]"
                             },
                             "privateIPAllocationMethod": "Static",
-                            "privateIPAddress": "[parameters('privateIP')]",
-                            "primary":true,
-                            "enableAcceleratedNetworking": true
+                            "privateIPAddress": "[parameters('privateIP')]"
                         }
                     }
                 ],
@@ -125,7 +127,7 @@
                     }
                 }
             },
-            "zones": ["1"]
+            "zones": ["[parameters('zone')]"]
         }
     ],
     "outputs": {
