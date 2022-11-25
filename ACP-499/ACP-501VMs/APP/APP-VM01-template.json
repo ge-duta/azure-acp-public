@@ -1,48 +1,41 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "name": {
-            "type": "string",
-            "defaultValue": "lb-HANADB-EUS2-test",
-            "metadata": { //prease add a field for Network, subnet, IP
-                "description": "This tag will be used as a prefix for the hostname of the SAS servers and Azure resources"
-            }
+            "type": "string"
         },
         "location": {
-            "type": "string",
-            "defaultValue": "eastus2"
+            "type": "string"
         },
         "sku": {
-            "type": "string",
-            "defaultValue": "Standard"
+            "type": "string"
         },
         "tier": {
-            "type": "string",
-            "defaultValue": "Regional"
+            "type": "string"
         }
     },
     "resources": [
         {
-            "apiVersion": "2020-11-01",
+            "apiVersion": "2021-05-01",
             "name": "[parameters('name')]",
             "type": "Microsoft.Network/loadBalancers",
             "location": "[parameters('location')]",
             "dependsOn": [],
             "tags": {
-                "Application": "SAP",
+                "Project": "SAP HANA",
                 "Environment": "DEV"
             },
             "properties": {
                 "frontendIPConfigurations": [
                     {
-                        "name": "frontend",
+                        "name": "frontIP",
                         "properties": {
-                            "privateIPAddress": "192.168.1.10",
+                            "privateIPAddress": "10.75.101.25",
                             "privateIPAddressVersion": "IPv4",
                             "privateIPAllocationMethod": "Static",
                             "subnet": {
-                                "id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet/subnets/useast2dev-saphana"
+                                "id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet/subnets/useast2dev-sapapp"
                             }
                         },
                         "zones": [
@@ -54,15 +47,15 @@
                 ],
                 "backendAddressPools": [
                     {
-                        "name": "backend"
+                        "name": "backendapppool"
                     }
                 ],
                 "probes": [
                     {
-                        "name": "health.DB",
+                        "name": "HP-app",
                         "properties": {
                             "protocol": "Tcp",
-                            "port": 65500,
+                            "port": 80,
                             "requestPath": null,
                             "intervalInSeconds": 5,
                             "numberOfProbes": 1
@@ -71,25 +64,25 @@
                 ],
                 "loadBalancingRules": [
                     {
-                        "name": "lb-DB",
+                        "name": "lb-app-failover",
                         "properties": {
                             "frontendIPConfiguration": {
-                                "id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/loadBalancers/lb-HANADB-EUS2-test/frontendIPConfigurations/frontend"
+                                "id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/loadBalancers/lbuseast2devtestSAPAPP/frontendIPConfigurations/frontIP"
                             },
-                            "frontendPort": 0,
-                            "backendPort": 0,
-                            "enableFloatingIP": true,
+                            "frontendPort": 80,
+                            "backendPort": 80,
+                            "enableFloatingIP": false,
                             "idleTimeoutInMinutes": 4,
-                            "protocol": "All",
+                            "protocol": "TCP",
                             "loadDistribution": "Default",
                             "probe": {
-                                "id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/loadBalancers/lb-HANADB-EUS2-test/probes/health.DB"
+                                "id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/loadBalancers/lbuseast2devtestSAPAPP/probes/HP-app"
                             },
                             "disableOutboundSnat": true,
                             "enableTcpReset": false,
                             "backendAddressPools": [
                                 {
-                                    "id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/loadBalancers/lb-HANADB-EUS2-test/backendAddressPools/backend"
+                                    "id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/loadBalancers/lbuseast2devtestSAPAPP/backendAddressPools/backendapppool"
                                 }
                             ]
                         }
