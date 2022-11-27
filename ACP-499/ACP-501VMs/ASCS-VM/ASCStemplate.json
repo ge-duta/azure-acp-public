@@ -1,5 +1,5 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "location": {
@@ -68,7 +68,7 @@
         },
         "PrivateIP-NIC2":{
             "type": "string",
-            "defaultValue": "192.168.3.1"
+            "defaultValue": "192.168.3.3"
         },
         "enableAcceleratedNetworking": {
             "type": "bool",
@@ -136,12 +136,7 @@
                                 "id": "[variables('subnetRef2')]"
                             },
                             "privateIPAllocationMethod": "Static",
-                            "privateIPAddress": "[concat(parameters('PrivateIP-NIC2'))]",
-                            "loadBalancerBackendAddressPools": [
-                                {
-                                    "id": "[parameters('backendPoolId')]"
-                                }
-                            ]
+                            "privateIPAddress": "[concat(parameters('PrivateIP-NIC2'))]"
                         }
                     }
                 ],
@@ -238,9 +233,7 @@
                     }
                 }
             },
-            "zones": [
-                "1"
-            ]
+            "zones": ["[parameters('zone')]"]
         }
     ],
     "outputs": {
