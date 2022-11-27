@@ -8,7 +8,7 @@
         },
         "virtualMachineName1": {
             "type": "string",
-            "defaultValue" : "sapdevtest-ascs-vm01"
+            "defaultValue" : "sapdevtest-ascs-vm02"
         },
         "adminUsername": {
             "type": "string",
@@ -16,7 +16,7 @@
         },
         "adminPassword": {
             "type": "secureString",
-            "defaultValue" : "sapdevtest-ascs-vm01"
+            "defaultValue" : "sapdevtest-ascs-vm02"
         },
         "virtualMachineSize": {
             "type": "string",
@@ -24,13 +24,13 @@
         },
         "dataDisks1": {
             "type": "array",
-            "defaultValue" : [{"lun": 0,"createOption": "attach","deleteOption": "Detach","caching": "ReadOnly","writeAcceleratorEnabled": false,"id": null,"name": "sapdevtest-ascs-vm01_DataDisk_0","storageAccountType": null,"diskSizeGB": null,"diskEncryptionSet": null}]
+            "defaultValue" : [{"lun": 0,"createOption": "attach","deleteOption": "Detach","caching": "ReadOnly","writeAcceleratorEnabled": false,"id": null,"name": "sapdevtest-ascs-vm02_DataDisk_0","storageAccountType": null,"diskSizeGB": null,"diskEncryptionSet": null}]
         },
         "dataDiskResources1": {
             "type": "array",
             "defaultValue" : [
                 {
-                    "name": "sapdevtest-ascs-vm01_DataDisk_0",
+                    "name": "sapdevtest-ascs-vm02_DataDisk_0",
                     "sku": "Premium_LRS",
                     "properties": {
                         "diskSizeGB": 64,
@@ -52,11 +52,11 @@
         },
         "networkInterfaceName1": {
             "type": "string",
-            "defaultValue": "sapdevtest-ascs-vm01-nic1"
+            "defaultValue": "sapdevtest-ascs-vm02-nic1"
         },
         "PrivateIP-NIC1":{
             "type": "string",
-            "defaultValue": "10.75.101.11"
+            "defaultValue": "10.75.101.22"
         },
         "subnetName2": {
         "type": "string",
@@ -64,11 +64,11 @@
         },
         "networkInterfaceName2": {
             "type": "string",
-            "defaultValue": "sapdevtest-ascs-vm01-nic2"
+            "defaultValue": "sapdevtest-ascs-vm02-nic2"
         },
         "PrivateIP-NIC2":{
             "type": "string",
-            "defaultValue": "192.168.3.3"
+            "defaultValue": "192.168.3.22"
         },
         "enableAcceleratedNetworking": {
             "type": "bool",
@@ -80,11 +80,11 @@
         },
         "proximityPlacementGroupId": {
             "type": "string",
-            "defaultValue" : "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEAST2-SAP-DEVTEST-RG/providers/Microsoft.Compute/proximityPlacementGroups/SAP4HANA-PPE-EUS2-Zone1"
+            "defaultValue" : "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEAST2-SAP-DEVTEST-RG/providers/Microsoft.Compute/proximityPlacementGroups/SAP4HANA-PPE-EUS2-Zone2"
         },
         "zone": {
             "type": "string",
-            "defaultValue" : "1"
+            "defaultValue" : "2"
         }
     },
     "variables": {
@@ -130,7 +130,7 @@
             "properties": {
                 "ipConfigurations": [
                     {
-                        "name": "ipconfig1",
+                        "name": "ipconfig2",
                         "properties": {
                             "subnet": {
                                 "id": "[variables('subnetRef2')]"
@@ -209,9 +209,17 @@
                         {
                             "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceName1'))]",
                             "properties": {
+                                "deleteOption": "Detach",
+                                "primary": true
+                            }
+                        },
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceName2'))]",
+                            "properties": {
                                 "deleteOption": "Detach"
                             }
                         }
+
                     ]
                 },
                 "osProfile": {

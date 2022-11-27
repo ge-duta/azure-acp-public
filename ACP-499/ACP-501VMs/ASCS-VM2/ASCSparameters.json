@@ -1,0 +1,84 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "value": "eastus2"
+    },
+    "virtualMachineName1": {
+      "value": "sapdevtest-ascs-vm02"
+    },
+    "adminUsername": {
+      "value": "azureadmin"
+    },
+    "adminPassword": {
+      "value": "sapdevtest-ascs-vm01"
+    },
+    "virtualMachineSize": {
+      "value": null
+    },
+    "dataDisks1": {
+      "value": [
+        {
+          "lun": 0,
+          "createOption": "attach",
+          "deleteOption": "Detach",
+          "caching": "ReadOnly",
+          "writeAcceleratorEnabled": false,
+          "id": null,
+          "name": "sapdevtest-ascs-vm02_DataDisk_0",
+          "storageAccountType": null,
+          "diskSizeGB": null,
+          "diskEncryptionSet": null
+        }
+      ]
+    },
+    "dataDiskResources1": {
+      "value": [
+        {
+          "name": "sapdevtest-ascs-vm02_DataDisk_0",
+          "sku": "Premium_LRS",
+          "properties": {
+            "diskSizeGB": 64,
+            "creationData": {
+              "createOption": "empty"
+            }
+          }
+        }
+      ]
+    },
+    "virtualNetworkId": {
+      "value": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet"
+    },
+    "subnetName": {
+      "value": "useast2dev-sapapp"
+    },
+    "networkInterfaceName1": {
+      "value": "sapdevtest-ascs-vm02-nic1"
+    },
+    "PrivateIP-NIC1": {
+      "value": "10.75.101.11"
+    },
+    "subnetName2": {
+      "value": "useastus2devsapHA1"
+    },
+    "networkInterfaceName2": {
+      "value": "sapdevtest-ascs-vm02-nic2"
+    },
+    "PrivateIP-NIC2": {
+      "value": "192.168.3.3"
+    },
+    "enableAcceleratedNetworking": {
+      "value": true
+    },
+    "backendPoolId": {
+      "value": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/loadBalancers/lbuseast2devtestSAPAPP/backendAddressPools/backendapppool"
+    },
+    "proximityPlacementGroupId": {
+      "value": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEAST2-SAP-DEVTEST-RG/providers/Microsoft.Compute/proximityPlacementGroups/SAP4HANA-PPE-EUS2-Zone2"
+    },
+    "zone": {
+      "value": "2"
+    }
+  }
+}
