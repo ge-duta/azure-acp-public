@@ -1,46 +1,27 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "location": {
-            "type": "string",
-            "defaultValue": "eastus2"
+            "type": "string"
         },
         "networkInterfaceName1": {
-            "type": "string",
-            "defaultValue": "sapdevtest-jumpserver"
+            "type": "string"
         },
         "enableAcceleratedNetworking": {
-            "type": "bool",
-            "defaultValue": "true"
+            "type": "bool"
+        },
+        "backendPoolId": {
+            "type": "string"
         },
         "subnetName": {
-            "type": "string",
-            "defaultValue": "useast2dev-sapapp"
+            "type": "string"
         },
         "virtualNetworkId": {
-            "type": "string",
-            "defaultValue": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet"
-        },
-        "publicIpAddressName1": {
-            "type": "string",
-            "defaultValue": "sapdevtest-jumpserver-vm01-ip"
-        },
-        "publicIpAddressType": {
-            "type": "string",
-            "defaultValue": "static"
-        },
-        "publicIpAddressSku": {
-            "type": "string",
-            "defaultValue": "Standard"
-        },
-        "pipDeleteOption": {
-            "type": "string",
-            "defaultValue": "Detach"
+            "type": "string"
         },
         "virtualMachineName": {
-            "type": "string",
-            "defaultValue": "sapdevtest-jumpserver-vm01"
+            "type": "string"
         },
         "virtualMachineName1": {
             "type": "string"
@@ -49,8 +30,7 @@
             "type": "string"
         },
         "virtualMachineRG": {
-            "type": "string",
-            "defaultValue": "USEast2-SAP-devtest-rg"
+            "type": "string"
         },
         "osDiskType": {
             "type": "string"
@@ -58,43 +38,26 @@
         "osDiskDeleteOption": {
             "type": "string"
         },
+        "dataDisks1": {
+            "type": "array"
+        },
+        "dataDiskResources1": {
+            "type": "array"
+        },
         "virtualMachineSize": {
-            "type": "string",
-            "defaultValue": "Standard_E2bs_v5"
+            "type": "string"
         },
         "nicDeleteOption": {
             "type": "string"
         },
         "adminUsername": {
-            "type": "string",
-            "metadata": {
-                "description": "Username for the Virtual Machine."
-            }
-        },
-        "authenticationType": {
-            "type": "string",
-            "defaultValue": "password",
-            "allowedValues": [
-                "password",
-                "sshPublicKey"
-            ],
-            "metadata": {
-                "description": "Type of authentication to use on the Virtual Machine."
-            }
-        },
-            "adminPasswordOrKey": {
-            "type": "securestring",
-            "metadata": {
-                "description": "Password or ssh key for the Virtual Machine."
-            }
+            "type": "string"
         },
         "proximityPlacementGroupId": {
-            "type": "string",
-            "defaultValue": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEAST2-SAP-DEVTEST-RG/providers/Microsoft.Compute/proximityPlacementGroups/SAP4HANA-PPE-EUS2-Zone1"
+            "type": "string"
         },
         "zone": {
-            "type": "string",
-            "defaultValue": "1"
+            "type": "string"
         }
     },
     "variables": {
@@ -108,9 +71,7 @@
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2021-08-01",
             "location": "[parameters('location')]",
-            "dependsOn": [
-                "[concat('Microsoft.Network/publicIpAddresses/', parameters('publicIpAddressName1'))]"
-            ],
+            "dependsOn": [],
             "properties": {
                 "ipConfigurations": [
                     {
@@ -120,37 +81,38 @@
                                 "id": "[variables('subnetRef')]"
                             },
                             "privateIPAllocationMethod": "Dynamic",
-                            "publicIpAddress": {
-                                "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/publicIpAddresses', parameters('publicIpAddressName1'))]",
-                                "properties": {
-                                    "deleteOption": "[parameters('pipDeleteOption')]"
+                            "loadBalancerBackendAddressPools": [
+                                {
+                                    "id": "[parameters('backendPoolId')]"
                                 }
-                            }
+                            ]
                         }
                     }
                 ],
                 "enableAcceleratedNetworking": "[parameters('enableAcceleratedNetworking')]"
             },
             "tags": {
-                "tag": "value"
+                "Project": "SAP HANA",
+                "Environment": "DEV"
             }
         },
         {
-            "name": "[parameters('publicIpAddressName1')]",
-            "type": "Microsoft.Network/publicIpAddresses",
-            "apiVersion": "2020-08-01",
+            "name": "[parameters('dataDiskResources1')[copyIndex()].name]",
+            "type": "Microsoft.Compute/disks",
+            "apiVersion": "2022-03-02",
             "location": "[parameters('location')]",
-            "properties": {
-                "publicIpAllocationMethod": "[parameters('publicIpAddressType')]"
-            },
+            "properties": "[parameters('dataDiskResources1')[copyIndex()].properties]",
             "sku": {
-                "name": "[parameters('publicIpAddressSku')]"
+                "name": "[parameters('dataDiskResources1')[copyIndex()].sku]"
             },
-            "zones": [
-                "1"
-            ],
+            "copy": {
+                "name": "managedDiskResources",
+                "count": "[length(parameters('dataDiskResources1'))]"
+            },
+            "zones": "[if(contains(parameters('dataDiskResources1')[copyIndex()].sku, '_ZRS'), json('null'), array(1))]",
             "tags": {
-                "tag": "value"
+                "Project": "SAP HANA",
+                "Environment": "DEV"
             }
         },
         {
@@ -159,6 +121,7 @@
             "apiVersion": "2022-03-01",
             "location": "[parameters('location')]",
             "dependsOn": [
+                "managedDiskResources",
                 "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName1'))]"
             ],
             "properties": {
@@ -174,11 +137,29 @@
                         "deleteOption": "[parameters('osDiskDeleteOption')]"
                     },
                     "imageReference": {
-                        "publisher": "RedHat",
-                        "offer": "RHEL",
-                        "sku": "82gen2",
+                        "publisher": "redhat",
+                        "offer": "rhel-sap-apps",
+                        "sku": "86sapapps-gen2",
                         "version": "latest"
-                    }
+                    },
+                    "copy": [
+                        {
+                            "name": "dataDisks",
+                            "count": "[length(parameters('dataDisks1'))]",
+                            "input": {
+                                "lun": "[parameters('dataDisks1')[copyIndex('dataDisks')].lun]",
+                                "createOption": "[parameters('dataDisks1')[copyIndex('dataDisks')].createOption]",
+                                "caching": "[parameters('dataDisks1')[copyIndex('dataDisks')].caching]",
+                                "diskSizeGB": "[parameters('dataDisks1')[copyIndex('dataDisks')].diskSizeGB]",
+                                "managedDisk": {
+                                    "id": "[coalesce(parameters('dataDisks1')[copyIndex('dataDisks')].id, if(equals(parameters('dataDisks1')[copyIndex('dataDisks')].name, json('null')), json('null'), resourceId('Microsoft.Compute/disks', parameters('dataDisks1')[copyIndex('dataDisks')].name)))]",
+                                    "storageAccountType": "[parameters('dataDisks1')[copyIndex('dataDisks')].storageAccountType]"
+                                },
+                                "deleteOption": "[parameters('dataDisks1')[copyIndex('dataDisks')].deleteOption]",
+                                "writeAcceleratorEnabled": "[parameters('dataDisks1')[copyIndex('dataDisks')].writeAcceleratorEnabled]"
+                            }
+                        }
+                    ]
                 },
                 "networkProfile": {
                     "networkInterfaces": [
@@ -193,9 +174,12 @@
                 "osProfile": {
                     "computerName": "[parameters('virtualMachineComputerName1')]",
                     "adminUsername": "[parameters('adminUsername')]",
-                    "adminPassword": "[parameters('adminPasswordOrKey')]",
-                    "linuxConfiguration": "[if(equals(parameters('authenticationType'), 'password'), json('null'), variables('linuxConfiguration'))]"
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": true
                     }
+                },
+                "proximityPlacementGroup": {
+                    "id": "[parameters('proximityPlacementGroupId')]"
                 },
                 "diagnosticsProfile": {
                     "bootDiagnostics": {
@@ -204,11 +188,18 @@
                 }
             },
             "tags": {
-                "tag": "value"
+                "Project": "SAP HANA",
+                "Environment": "DEV"
             },
             "zones": [
                 "1"
             ]
         }
-    ]
+    ],
+    "outputs": {
+        "adminUsername": {
+            "type": "string",
+            "value": "[parameters('adminUsername')]"
+        }
+    }
 }

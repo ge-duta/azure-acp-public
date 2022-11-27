@@ -6,19 +6,22 @@
             "value": "eastus2"
         },
         "networkInterfaceName1": {
-            "value": "sapdevtest-jumpserver-vm01228_z1"
+            "value": "sapdevtest-ascs-vm01923_z1"
         },
         "enableAcceleratedNetworking": {
             "value": true
         },
+        "backendPoolId": {
+            "value": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/loadBalancers/lbuseast2devtestSAPAPP/backendAddressPools/backendapppool"
+        },
         "subnetName": {
-            "value": "useast2dev-sapapp"
+            "value": "useast2-sapHA2"
         },
         "virtualNetworkId": {
             "value": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet"
         },
         "publicIpAddressName1": {
-            "value": "sapdevtest-jumpserver-vm01-ip"
+            "value": "sapdevtest-ascs-vm01-ip"
         },
         "publicIpAddressType": {
             "value": "Static"
@@ -30,13 +33,13 @@
             "value": "Detach"
         },
         "virtualMachineName": {
-            "value": "sapdevtest-jumpserver-vm01"
+            "value": "sapdevtest-ascs-vm01"
         },
         "virtualMachineName1": {
-            "value": "sapdevtest-jumpserver-vm01"
+            "value": "sapdevtest-ascs-vm01"
         },
         "virtualMachineComputerName1": {
-            "value": "sapdevtest-jumpserver-vm01"
+            "value": "sapdevtest-ascs-vm01"
         },
         "virtualMachineRG": {
             "value": "USEast2-SAP-devtest-rg"
@@ -48,7 +51,7 @@
             "value": "Detach"
         },
         "virtualMachineSize": {
-            "value": "Standard_E4bs_v5"
+            "value": "Standard_E2bs_v5"
         },
         "nicDeleteOption": {
             "value": "Detach"
@@ -57,7 +60,7 @@
             "value": "azureadmin"
         },
         "adminPassword": {
-            "value": "password"
+            "value": null
         },
         "proximityPlacementGroupId": {
             "value": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEAST2-SAP-DEVTEST-RG/providers/Microsoft.Compute/proximityPlacementGroups/SAP4HANA-PPE-EUS2-Zone1"

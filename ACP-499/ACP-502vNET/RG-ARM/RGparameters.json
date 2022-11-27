@@ -1,0 +1,18 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "rgName": {
+            "value": "USCentral-SAP-devtest-rg"
+        },
+        "rgLocation": {
+            "value": "centralus"
+        },
+        "tags": {
+            "value": {
+                "Owner": "Duta, George",
+                "Prject": "SAP HANA POC"
+            }
+        }
+    }
+}
