@@ -3,70 +3,58 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "location": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "eastus2"
+        },
+        "virtualMachineName1": {
+            "type": "string",
+            "defaultValue" : "sapdevtest-ascs-vm01"
+        },
+        "adminUsername": {
+            "type": "string",
+            "defaultValue" : "azureadmin`"
+        },
+        "adminPassword": {
+            "type": "secureString",
+            "defaultValue" : "sapdevtest-ascs-vm01"
+        },
+        "virtualMachineSize": {
+            "type": "string",
+            "defaultValue" : "Standard_E2bs_v5"
+        },
+        "dataDisks1": {
+            "type": "array"
+        },
+        "dataDiskResources1": {
+            "type": "array"
+        },
+        
+        "virtualNetworkId": {
+            "type": "string",
+            "defaultValue" : "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet"
+        },
+        
+        "subnetName": {
+            "type": "string",
+            "defaultValue" : "useast2dev-sapapp"
         },
         "networkInterfaceName1": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "sapdevtest-ascs-vm01-nic1"
         },
         "enableAcceleratedNetworking": {
-            "type": "bool"
+            "type": "bool",
+            "defaultValue": "true"
         },
         "backendPoolId": {
             "type": "string"
-        },
-        "subnetName": {
-            "type": "string"
-        },
-        "virtualNetworkId": {
-            "type": "string"
-        },
-        "publicIpAddressName1": {
-            "type": "string"
-        },
-        "publicIpAddressType": {
-            "type": "string"
-        },
-        "publicIpAddressSku": {
-            "type": "string"
-        },
-        "pipDeleteOption": {
-            "type": "string"
-        },
-        "virtualMachineName": {
-            "type": "string"
-        },
-        "virtualMachineName1": {
-            "type": "string"
-        },
-        "virtualMachineComputerName1": {
-            "type": "string"
-        },
-        "virtualMachineRG": {
-            "type": "string"
-        },
-        "osDiskType": {
-            "type": "string"
-        },
-        "osDiskDeleteOption": {
-            "type": "string"
-        },
-        "virtualMachineSize": {
-            "type": "string"
-        },
-        "nicDeleteOption": {
-            "type": "string"
-        },
-        "adminUsername": {
-            "type": "string"
-        },
-        "adminPassword": {
-            "type": "secureString"
         },
         "proximityPlacementGroupId": {
             "type": "string"
         },
         "zone": {
-            "type": "string"
+            "type": "string",
+            "defaultValue" : "1"
         }
     },
     "variables": {
@@ -80,9 +68,7 @@
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2021-08-01",
             "location": "[parameters('location')]",
-            "dependsOn": [
-                "[concat('Microsoft.Network/publicIpAddresses/', parameters('publicIpAddressName1'))]"
-            ],
+            "dependsOn": [],
             "properties": {
                 "ipConfigurations": [
                     {
@@ -96,13 +82,7 @@
                                 {
                                     "id": "[parameters('backendPoolId')]"
                                 }
-                            ],
-                            "publicIpAddress": {
-                                "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/publicIpAddresses', parameters('publicIpAddressName1'))]",
-                                "properties": {
-                                    "deleteOption": "[parameters('pipDeleteOption')]"
-                                }
-                            }
+                            ]
                         }
                     }
                 ],
@@ -110,19 +90,19 @@
             }
         },
         {
-            "name": "[parameters('publicIpAddressName1')]",
-            "type": "Microsoft.Network/publicIpAddresses",
-            "apiVersion": "2020-08-01",
+            "name": "[parameters('dataDiskResources1')[copyIndex()].name]",
+            "type": "Microsoft.Compute/disks",
+            "apiVersion": "2022-03-02",
             "location": "[parameters('location')]",
-            "properties": {
-                "publicIpAllocationMethod": "[parameters('publicIpAddressType')]"
-            },
+            "properties": "[parameters('dataDiskResources1')[copyIndex()].properties]",
             "sku": {
-                "name": "[parameters('publicIpAddressSku')]"
+                "name": "[parameters('dataDiskResources1')[copyIndex()].sku]"
             },
-            "zones": [
-                "1"
-            ]
+            "copy": {
+                "name": "managedDiskResources",
+                "count": "[length(parameters('dataDiskResources1'))]"
+            },
+            "zones": "[if(contains(parameters('dataDiskResources1')[copyIndex()].sku, '_ZRS'), json('null'), array(1))]"
         },
         {
             "name": "[parameters('virtualMachineName1')]",
@@ -130,6 +110,7 @@
             "apiVersion": "2022-03-01",
             "location": "[parameters('location')]",
             "dependsOn": [
+                "managedDiskResources",
                 "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName1'))]"
             ],
             "properties": {
@@ -140,29 +121,47 @@
                     "osDisk": {
                         "createOption": "fromImage",
                         "managedDisk": {
-                            "storageAccountType": "[parameters('osDiskType')]"
+                            "storageAccountType": "Premium_LRS"
                         },
-                        "deleteOption": "[parameters('osDiskDeleteOption')]"
+                        "deleteOption": "Detach"
                     },
                     "imageReference": {
                         "publisher": "redhat",
                         "offer": "rhel-sap-apps",
                         "sku": "86sapapps-gen2",
                         "version": "latest"
-                    }
+                    },
+                    "copy": [
+                        {
+                            "name": "dataDisks",
+                            "count": "[length(parameters('dataDisks1'))]",
+                            "input": {
+                                "lun": "[parameters('dataDisks1')[copyIndex('dataDisks')].lun]",
+                                "createOption": "[parameters('dataDisks1')[copyIndex('dataDisks')].createOption]",
+                                "caching": "[parameters('dataDisks1')[copyIndex('dataDisks')].caching]",
+                                "diskSizeGB": "[parameters('dataDisks1')[copyIndex('dataDisks')].diskSizeGB]",
+                                "managedDisk": {
+                                    "id": "[coalesce(parameters('dataDisks1')[copyIndex('dataDisks')].id, if(equals(parameters('dataDisks1')[copyIndex('dataDisks')].name, json('null')), json('null'), resourceId('Microsoft.Compute/disks', parameters('dataDisks1')[copyIndex('dataDisks')].name)))]",
+                                    "storageAccountType": "[parameters('dataDisks1')[copyIndex('dataDisks')].storageAccountType]"
+                                },
+                                "deleteOption": "[parameters('dataDisks1')[copyIndex('dataDisks')].deleteOption]",
+                                "writeAcceleratorEnabled": "[parameters('dataDisks1')[copyIndex('dataDisks')].writeAcceleratorEnabled]"
+                            }
+                        }
+                    ]
                 },
                 "networkProfile": {
                     "networkInterfaces": [
                         {
                             "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceName1'))]",
                             "properties": {
-                                "deleteOption": "[parameters('nicDeleteOption')]"
+                                "deleteOption": "Detach"
                             }
                         }
                     ]
                 },
                 "osProfile": {
-                    "computerName": "[parameters('virtualMachineComputerName1')]",
+                    "computerName": "[parameters('virtualMachineName1')]",
                     "adminUsername": "[parameters('adminUsername')]",
                     "adminPassword": "[parameters('adminPassword')]",
                     "linuxConfiguration": {
