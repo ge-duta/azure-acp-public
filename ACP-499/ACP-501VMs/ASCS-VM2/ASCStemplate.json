@@ -110,6 +110,7 @@
                             },
                             "privateIPAllocationMethod": "Static",
                             "privateIPAddress": "[concat(parameters('PrivateIP-NIC1'))]",
+                            "primary":true,
                             "loadBalancerBackendAddressPools": [
                                 {
                                     "id": "[parameters('backendPoolId')]"
@@ -216,7 +217,8 @@
                         {
                             "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceName2'))]",
                             "properties": {
-                                "deleteOption": "Detach"
+                                "deleteOption": "Detach",
+                                "primary": false
                             }
                         }
 
