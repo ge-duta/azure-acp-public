@@ -12,7 +12,7 @@
         },
         "adminUsername": {
             "type": "string",
-            "defaultValue" : "azureadmin`"
+            "defaultValue" : "azureadmin"
         },
         "adminPassword": {
             "type": "secureString",
@@ -23,17 +23,29 @@
             "defaultValue" : "Standard_E2bs_v5"
         },
         "dataDisks1": {
-            "type": "array"
+            "type": "array",
+            "defaultValue" : [{"lun": 0,"createOption": "attach","deleteOption": "Detach","caching": "ReadOnly","writeAcceleratorEnabled": false,"id": null,"name": "sapdevtest-ascs-vm01_DataDisk_0","storageAccountType": null,"diskSizeGB": null,"diskEncryptionSet": null}]
         },
         "dataDiskResources1": {
-            "type": "array"
+            "type": "array",
+            "defaultValue" : [
+                {
+                    "name": "sapdevtest-ascs-vm01_DataDisk_0",
+                    "sku": "Premium_LRS",
+                    "properties": {
+                        "diskSizeGB": 64,
+                        "creationData": {
+                            "createOption": "empty"
+                        }
+                    }
+                }
+            ]
         },
         
         "virtualNetworkId": {
             "type": "string",
             "defaultValue" : "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet"
         },
-        
         "subnetName": {
             "type": "string",
             "defaultValue" : "useast2dev-sapapp"
@@ -42,15 +54,33 @@
             "type": "string",
             "defaultValue": "sapdevtest-ascs-vm01-nic1"
         },
+        "PrivateIP-NIC1":{
+            "type": "string",
+            "defaultValue": "10.75.101.11"
+        },
+        "subnetName2": {
+        "type": "string",
+        "defaultValue" : "useastus2devsapHA1"
+        },
+        "networkInterfaceName2": {
+            "type": "string",
+            "defaultValue": "sapdevtest-ascs-vm01-nic2"
+        },
+        "PrivateIP-NIC2":{
+            "type": "string",
+            "defaultValue": "192.168.3.1"
+        },
         "enableAcceleratedNetworking": {
             "type": "bool",
             "defaultValue": "true"
         },
         "backendPoolId": {
-            "type": "string"
+            "type": "string",
+            "defaultValue" : "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/loadBalancers/lbuseast2devtestSAPAPP/backendAddressPools/backendapppool"
         },
         "proximityPlacementGroupId": {
-            "type": "string"
+            "type": "string",
+            "defaultValue" : "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEAST2-SAP-DEVTEST-RG/providers/Microsoft.Compute/proximityPlacementGroups/SAP4HANA-PPE-EUS2-Zone1"
         },
         "zone": {
             "type": "string",
@@ -60,7 +90,8 @@
     "variables": {
         "vnetId": "[parameters('virtualNetworkId')]",
         "vnetName": "[last(split(variables('vnetId'), '/'))]",
-        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]"
+        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
+        "subnetRef2": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName2'))]"
     },
     "resources": [
         {
@@ -77,7 +108,35 @@
                             "subnet": {
                                 "id": "[variables('subnetRef')]"
                             },
-                            "privateIPAllocationMethod": "Dynamic",
+                            "privateIPAllocationMethod": "Static",
+                            "privateIPAddress": "[concat(parameters('PrivateIP-NIC1'))]",
+                            "loadBalancerBackendAddressPools": [
+                                {
+                                    "id": "[parameters('backendPoolId')]"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "enableAcceleratedNetworking": "[parameters('enableAcceleratedNetworking')]"
+            }
+        },
+        {
+            "name": "[parameters('networkInterfaceName2')]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2021-08-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "subnet": {
+                                "id": "[variables('subnetRef2')]"
+                            },
+                            "privateIPAllocationMethod": "Static",
+                            "privateIPAddress": "[concat(parameters('PrivateIP-NIC2'))]",
                             "loadBalancerBackendAddressPools": [
                                 {
                                     "id": "[parameters('backendPoolId')]"
