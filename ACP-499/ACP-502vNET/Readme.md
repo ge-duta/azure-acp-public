@@ -2,9 +2,9 @@ Documentation: https://learn.microsoft.com/en-us/azure/center-sap-solutions/prep
 
 
 [Deploy Resource Group East US 2](https://github.com/ge-duta/azure-acp-public/tree/master/ACP-499/ACP-502vNET/RG-ARM)
-[![Deploy to Azure vNET](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FRG-ARM%2FRGtemplate.json)
+[![RG ARM](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FRG-ARM%2FRGtemplate.json)
 [Deploy Resource Group Central US](https://github.com/ge-duta/azure-acp-public/tree/master/ACP-499/ACP-502vNET/RG-ARM)
-[![Deploy to Azure vNET](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FRG-ARM%2FRGtemplate.json)
+[![RG2 ARM](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FRG-ARM%2FRGtemplateCentralUS.json)
 
 1. Networking <br/>
 1.1 [vNET - ARM template](https://github.com/ge-duta/azure-acp-public/tree/master/ACP-499/ACP-502vNET/vnet-subnets%20ARM)  

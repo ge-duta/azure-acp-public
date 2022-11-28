@@ -4,16 +4,16 @@
     "parameters": {
         "rgName": {
             "type": "string",
-            "defaultValue" : "RG-useast2dev-devSAP",
+            "defaultValue" : "RG-centralusdev-devSAP",
             "metadata": {
                 "description": "example: RG-useast2dev-devSAP or RG-centralusdev-devSAP"
             }
         },
         "rgLocation": {
             "type": "string",
-            "defaultValue": "eastus2",
+            "defaultValue": "centralus",
             "metadata": {
-                "description": "example: centerus or eastus2"
+                "description": "example: centralus or eastus2"
             }
         },
         "tags": {
