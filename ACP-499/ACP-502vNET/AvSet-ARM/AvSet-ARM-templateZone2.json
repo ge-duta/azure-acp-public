@@ -4,7 +4,7 @@
     "parameters": {
         "resourceName": {
             "type": "string",
-            "defaultValue" : "AVset1-USeast2devtestSAPhana",
+            "defaultValue" : "AVset2-USeast2devtestSAPhana",
             "metadata": {
                 "description": "example:AVset1-USeast2devtestSAPhana"
             }
@@ -39,7 +39,7 @@
         },
         "proximityPlacementGroupId": {
             "type": "string",
-            "defaultValue": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/RG-USEAST2DEV-DEVSAP/providers/Microsoft.Compute/proximityPlacementGroups/PPGuseast2devtestSAPhana-Zone1",
+            "defaultValue": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/RG-USEAST2DEV-DEVSAP/providers/Microsoft.Compute/proximityPlacementGroups/PPGuseast2devtestSAPhana-Zone2",
             "metadata": {
                 "description": "The resource ID of the proximity placement group."
             }
