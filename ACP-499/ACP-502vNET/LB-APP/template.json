@@ -1,5 +1,5 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "name": {
@@ -7,6 +7,14 @@
         },
         "location": {
             "type": "string"
+        },
+        "SID": {
+            "type": "string",
+            "defaultValue" : "SI1"
+        },
+        "SubnetId": {
+            "type": "string",
+            "defaultValue" : "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet/subnets/useast2dev-sapapp"
         },
         "sku": {
             "type": "string"
@@ -22,10 +30,6 @@
             "type": "Microsoft.Network/loadBalancers",
             "location": "[parameters('location')]",
             "dependsOn": [],
-            "tags": {
-                "Project": "SAP HANA",
-                "Environment": "DEV"
-            },
             "properties": {
                 "frontendIPConfigurations": [
                     {
@@ -35,7 +39,8 @@
                             "privateIPAddressVersion": "IPv4",
                             "privateIPAllocationMethod": "Static",
                             "subnet": {
-                                "id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet/subnets/useast2dev-sapapp"
+                                // "id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet/subnets/useast2dev-sapapp"
+                                "id": "[parameters('SubnetId')]"
                             }
                         },
                         "zones": [
@@ -67,7 +72,7 @@
                         "name": "lb-app-failover",
                         "properties": {
                             "frontendIPConfiguration": {
-                                "id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/loadBalancers/lbuseast2devtestSAPAPP/frontendIPConfigurations/frontIP"
+                                "id": "[resourceId('Microsoft.Network/loadBalancers/frontendIpConfigurations', concat(parameters('SID'), '-APP-loadBalancer'), 'frontend.ASCS')]"
                             },
                             "frontendPort": 80,
                             "backendPort": 80,
@@ -76,13 +81,13 @@
                             "protocol": "TCP",
                             "loadDistribution": "Default",
                             "probe": {
-                                "id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/loadBalancers/lbuseast2devtestSAPAPP/probes/HP-app"
+                                "id": "[resourceId('Microsoft.Network/loadBalancers/probes', concat(parameters('SID'), '-ASCS-loadBalancer'), 'health.ASCS')]"
                             },
                             "disableOutboundSnat": true,
                             "enableTcpReset": false,
                             "backendAddressPools": [
                                 {
-                                    "id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/loadBalancers/lbuseast2devtestSAPAPP/backendAddressPools/backendapppool"
+                                    "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', concat(parameters('SID'), '-APP-loadBalancer'), 'backend')]"
                                 }
                             ]
                         }
