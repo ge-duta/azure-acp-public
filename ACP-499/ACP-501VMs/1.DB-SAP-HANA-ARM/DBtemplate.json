@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "location": {
@@ -8,7 +8,7 @@
         },
         "virtualMachineName1": {
             "type": "string",
-            "defaultValue" : "sapdevtest-ascs-vm02"
+            "defaultValue" : "sapdevtest-hana-vm01"
         },
         "adminUsername": {
             "type": "string",
@@ -16,7 +16,7 @@
         },
         "adminPassword": {
             "type": "secureString",
-            "defaultValue" : "sapdevtest-ascs-vm02"
+            "defaultValue" : "sapdevtest-ascs-vm01"
         },
         "virtualMachineSize": {
             "type": "string",
@@ -24,13 +24,13 @@
         },
         "dataDisks1": {
             "type": "array",
-            "defaultValue" : [{"lun": 0,"createOption": "attach","deleteOption": "Detach","caching": "ReadOnly","writeAcceleratorEnabled": false,"id": null,"name": "sapdevtest-ascs-vm02_DataDisk_0","storageAccountType": null,"diskSizeGB": null,"diskEncryptionSet": null}]
+            "defaultValue" : [{"lun": 0,"createOption": "attach","deleteOption": "Detach","caching": "ReadOnly","writeAcceleratorEnabled": false,"id": null,"name": "sapdevtest-hana-vm01_DataDisk_0","storageAccountType": null,"diskSizeGB": null,"diskEncryptionSet": null}]
         },
         "dataDiskResources1": {
             "type": "array",
             "defaultValue" : [
                 {
-                    "name": "sapdevtest-ascs-vm02_DataDisk_0",
+                    "name": "sapdevtest-hana-vm01_DataDisk_0",
                     "sku": "Premium_LRS",
                     "properties": {
                         "diskSizeGB": 64,
@@ -48,27 +48,39 @@
         },
         "subnetName": {
             "type": "string",
-            "defaultValue" : "useast2dev-sapapp"
+            "defaultValue" : "useast2dev-saphana"
         },
         "networkInterfaceName1": {
             "type": "string",
-            "defaultValue": "sapdevtest-ascs-vm02-nic1"
+            "defaultValue": "sapdevtest-hana-vm01-nic1"
         },
         "PrivateIP-NIC1":{
             "type": "string",
-            "defaultValue": "10.75.101.237"
+            "defaultValue": "192.168.1.5"
         },
         "subnetName2": {
         "type": "string",
-        "defaultValue" : "useastus2devsapHA1"
+        "defaultValue" : "useast2-sapHA2"//"useast2dev-saphana"
         },
         "networkInterfaceName2": {
             "type": "string",
-            "defaultValue": "sapdevtest-ascs-vm02-nic2"
+            "defaultValue": "sapdevtest-hana-vm01-nic2"
         },
         "PrivateIP-NIC2":{
             "type": "string",
-            "defaultValue": "192.168.3.5"
+            "defaultValue": "192.168.4.6"//"192.168.1.5"
+        },
+        "subnetName3": {
+        "type": "string",
+        "defaultValue" : "useast2dev-sapapp"
+        },
+        "networkInterfaceName3": {
+            "type": "string",
+            "defaultValue": "ssapdevtest-hana-vm01-nic3"
+        },
+        "PrivateIP-NIC3":{
+            "type": "string",
+            "defaultValue": "10.75.101.236"
         },
         "enableAcceleratedNetworking": {
             "type": "bool",
@@ -76,22 +88,23 @@
         },
         "backendPoolId": {
             "type": "string",
-            "defaultValue" : "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/loadBalancers/lbuseast2devtestSAPAPP/backendAddressPools/backendapppool"
+            "defaultValue" : "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/RG-useast2dev-devSAP/providers/Microsoft.Network/loadBalancers/lbuseast2devtestSAPhana/backendAddressPools/backendDBVMs"
         },
         "proximityPlacementGroupId": {
             "type": "string",
-            "defaultValue" : "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEAST2-SAP-DEVTEST-RG/providers/Microsoft.Compute/proximityPlacementGroups/SAP4HANA-PPE-EUS2-Zone2"
+            "defaultValue" : "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/RG-useast2dev-devSAP/providers/Microsoft.Compute/proximityPlacementGroups/PPGuseast2devtestSAPhana-Zone1"
         },
         "zone": {
             "type": "string",
-            "defaultValue" : "2"
+            "defaultValue" : "1"
         }
     },
     "variables": {
         "vnetId": "[parameters('virtualNetworkId')]",
         "vnetName": "[last(split(variables('vnetId'), '/'))]",
         "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
-        "subnetRef2": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName2'))]"
+        "subnetRef2": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName2'))]",
+        "subnetRef3": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName3'))]"
     },
     "resources": [
         {
@@ -131,13 +144,35 @@
             "properties": {
                 "ipConfigurations": [
                     {
-                        "name": "ipconfig2",
+                        "name": "ipconfig1",
                         "properties": {
                             "subnet": {
                                 "id": "[variables('subnetRef2')]"
                             },
                             "privateIPAllocationMethod": "Static",
                             "privateIPAddress": "[concat(parameters('PrivateIP-NIC2'))]"
+                        }
+                    }
+                ],
+                "enableAcceleratedNetworking": "[parameters('enableAcceleratedNetworking')]"
+            }
+        },
+        {
+            "name": "[parameters('networkInterfaceName3')]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2021-08-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "subnet": {
+                                "id": "[variables('subnetRef3')]"
+                            },
+                            "privateIPAllocationMethod": "Static",
+                            "privateIPAddress": "[concat(parameters('PrivateIP-NIC3'))]"
                         }
                     }
                 ],
@@ -207,7 +242,7 @@
                 },
                 "networkProfile": {
                     "networkInterfaces": [
-                        {
+                         {
                             "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceName1'))]",
                             "properties": {
                                 "deleteOption": "Detach",
@@ -220,8 +255,14 @@
                                 "deleteOption": "Detach",
                                 "primary": false
                             }
+                        },
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceName3'))]",
+                            "properties": {
+                                "deleteOption": "Detach",
+                                "primary": false
+                            }
                         }
-
                     ]
                 },
                 "osProfile": {
