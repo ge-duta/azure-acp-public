@@ -56,7 +56,7 @@
         },
         "PrivateIP-NIC1":{
             "type": "string",
-            "defaultValue": "10.75.101.11"
+            "defaultValue": "10.75.101.238"
         },
         "subnetName2": {
         "type": "string",
@@ -68,7 +68,7 @@
         },
         "PrivateIP-NIC2":{
             "type": "string",
-            "defaultValue": "192.168.3.3"
+            "defaultValue": "192.168.3.6"
         },
         "enableAcceleratedNetworking": {
             "type": "bool",
@@ -80,7 +80,7 @@
         },
         "proximityPlacementGroupId": {
             "type": "string",
-            "defaultValue" : "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEAST2-SAP-DEVTEST-RG/providers/Microsoft.Compute/proximityPlacementGroups/SAP4HANA-PPE-EUS2-Zone1"
+            "defaultValue" : "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/RG-useast2dev-devSAP/providers/Microsoft.Compute/proximityPlacementGroups/PPGuseast2devtestSAPhana-Zone1"
         },
         "zone": {
             "type": "string",
