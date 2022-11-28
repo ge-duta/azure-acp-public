@@ -11,21 +11,21 @@
         },
         "location": {
             "type": "string",
-            "defaultValue" : "[resourceGroup().location]",
+            "defaultValue" : "eastus2", // "[resourceGroup().location]",
             "metadata": {
                 "description": "example: eastus2, centralus"
             }
         },
         "platformFaultDomainCount": {
             "type": "int",
-            "defaultValue": "2",
+            "defaultValue": 2,
             "metadata": {
                 "description": "The number of fault domains to use."
             }
         },
         "platformUpdateDomainCount": {
             "type": "int",
-            "defaultValue": "2",
+            "defaultValue": 5,
             "metadata": {
                 "description": "The number of update domains to use."
             }
