@@ -2,7 +2,7 @@ Documentation: https://learn.microsoft.com/en-us/azure/center-sap-solutions/prep
 
 
 [Deploy Resource Group East US 2](https://github.com/ge-duta/azure-acp-public/tree/master/ACP-499/ACP-502vNET/RG-ARM)
-[![RG ARM](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FRG-ARM%2FRGtemplate.json)
+[![RG ARM](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FRG-ARM%2FRGtemplate.json)</br>
 [Deploy Resource Group Central US](https://github.com/ge-duta/azure-acp-public/tree/master/ACP-499/ACP-502vNET/RG-ARM)
 [![RG2 ARM](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FRG-ARM%2FRGtemplateCentralUS.json)
 
@@ -16,8 +16,7 @@ Documentation: https://learn.microsoft.com/en-us/azure/center-sap-solutions/prep
 [![Deploy to Azure ](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FPPG-ARM%2FPPG-template.json) </br>
 2.2 [PPG - EastUS 2 Zone2](https://github.com/ge-duta/azure-acp-public/blob/master/ACP-499/ACP-502vNET/PPG-ARM/PPG-templateEUS2Zone2.json)
 [![Deploy to Azure ](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FPPG-ARM%2FPPG-templateEUS2Zone2.json) </br>
-2.3 [PPG - CEntralUS Zone1]
-[PPG - CentralUS Zone1](https://github.com/ge-duta/azure-acp-public/blob/master/ACP-499/ACP-502vNET/PPG-ARM/PPG-templateCentralUSZone1.json)
+2.3 [PPG - CentralUS Zone1](https://github.com/ge-duta/azure-acp-public/blob/master/ACP-499/ACP-502vNET/PPG-ARM/PPG-templateCentralUSZone1.json)
 [![Deploy to Azure ](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FPPG-ARM%2FPPG-templateCentralUSZone1.json) </br>
 
 
