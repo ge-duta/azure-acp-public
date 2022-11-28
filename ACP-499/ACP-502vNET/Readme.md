@@ -14,8 +14,15 @@ Documentation: https://learn.microsoft.com/en-us/azure/center-sap-solutions/prep
 2. Proximity Placement Group  
 2.1 [PPG - EastUS 2 Zone1](https://github.com/ge-duta/azure-acp-public/tree/master/ACP-499/ACP-502vNET/PPG-ARM)
 [![Deploy to Azure ](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FPPG-ARM%2FPPG-template.json) </br>
-2.2 [PPG - EastUS 2 Zone2]
+2.2 [PPG - EastUS 2 Zone2](https://github.com/ge-duta/azure-acp-public/blob/master/ACP-499/ACP-502vNET/PPG-ARM/PPG-templateEUS2Zone2.json)
+[![Deploy to Azure ](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FPPG-ARM%2FPPG-templateEUS2Zone2.json) </br>
 2.3 [PPG - CEntralUS Zone1]
+[PPG - CentralUS Zone1](https://github.com/ge-duta/azure-acp-public/blob/master/ACP-499/ACP-502vNET/PPG-ARM/PPG-templateCentralUSZone1.json)
+[![Deploy to Azure ](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FPPG-ARM%2FPPG-templateCentralUSZone1.json) </br>
+
+
+
+
 3. Availability Sets  
 3.1 [AvSet ARM template](https://github.com/ge-duta/azure-acp-public/tree/master/ACP-499/ACP-502vNET/AvSet-ARM)    
 3.2 [![Deploy to Azure ](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FAvSet-ARM%2FAvSet-ARM-template.json)  
