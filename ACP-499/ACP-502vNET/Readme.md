@@ -19,12 +19,12 @@ Documentation: https://learn.microsoft.com/en-us/azure/center-sap-solutions/prep
 2.3 [PPG - CentralUS Zone1](https://github.com/ge-duta/azure-acp-public/blob/master/ACP-499/ACP-502vNET/PPG-ARM/PPG-templateCentralUSZone1.json)
 [![Deploy to Azure ](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FPPG-ARM%2FPPG-templateCentralUSZone1.json) </br>
 
-
-
-
 3. Availability Sets  
-3.1 [AvSet ARM template](https://github.com/ge-duta/azure-acp-public/tree/master/ACP-499/ACP-502vNET/AvSet-ARM)    
-3.2 [![Deploy to Azure ](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FAvSet-ARM%2FAvSet-ARM-template.json)  </br>
+3.1 [AvSet1 EastUS2 Zone1](https://github.com/ge-duta/azure-acp-public/tree/master/ACP-499/ACP-502vNET/AvSet-ARM)    
+[![Deploy to Azure ](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FAvSet-ARM%2FAvSet-ARM-template.json)  </br>
+3.2 [AvSet2 EastUS2 Zone2](https://github.com/ge-duta/azure-acp-public/blob/master/ACP-499/ACP-502vNET/AvSet-ARM/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FAvSet-ARM%2FAvSet-ARM-templateZone2.json)  </br>
+3.3 [AvSet CentralUS](https://github.com/ge-duta/azure-acp-public/blob/master/ACP-499/ACP-502vNET/AvSet-ARM/AvSet-ARM-templateCentralUS.json)    
+[![Deploy to Azure ](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FAvSet-ARM%2FAvSet-ARM-templateCentralUS.json)  </br>
 
 4. Load Balancers  
 4.1 [APP Load Balancer -  ARM Template](https://github.com/ge-duta/azure-acp-public/tree/master/ACP-499/ACP-502vNET/LB-APP)      
