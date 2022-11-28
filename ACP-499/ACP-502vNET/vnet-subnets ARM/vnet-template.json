@@ -6,9 +6,6 @@
             "type": "string",
             "defaultValue": "eastus2"
         },
-        "extendedLocation": {
-            "type": "object"
-        },
         "virtualNetworkName": {
             "type": "string",
             "defaultValue": "useast2dev-testvnet"
@@ -26,52 +23,68 @@
             "defaultValue": "false"
         },
         "subnetCount": {
-            "type": "int"
+            "type": "int",
+            "defaultValue": "6"
         },
         "subnet0_name": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "useast2dev-sapapp"
         },
         "subnet0_addressRange": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "10.75.101.0/27"
         },
         "subnet1_name": {
-            "type": "string"
+            "type": "string",
+             "defaultValue": "useast2dev-saphana"
         },
         "subnet1_addressRange": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "192.168.1.0/24"
         },
         "subnet2_name": {
-            "type": "string"
+            "type": "string",
+             "defaultValue" : "useast2dev-sapnfs"
         },
         "subnet2_addressRange": {
-            "type": "string"
+            "type": "string",
+            "defaultValue" : "192.168.2.0/24"
         },
         "subnet3_name": {
-            "type": "string"
+            "type": "string",
+            "defaultValue" : "HANA-DB-subnet"
         },
         "subnet3_addressRange": {
-            "type": "string"
+            "type": "string",
+            "defaultValue" : "10.75.3.0/24"
         },
         "subnet4_name": {
-            "type": "string"
+            "type": "string",
+            "defaultValue" : "useast2-sapHA1"
         },
         "subnet4_addressRange": {
-            "type": "string"
+            "type": "string",
+            "defaultValue" : "192.168.3.0/24"
         },
         "subnet5_name": {
-            "type": "string"
+            "type": "string",
+            "defaultValue" : "useast2-sapHA2"
         },
         "subnet5_addressRange": {
-            "type": "string"
+            "type": "string",
+            "defaultValue" : "192.168.4.0/24"
         },
         "ddosProtectionPlanEnabled": {
-            "type": "bool"
+            "type": "bool",
+            "defaultValue" : "false"
         },
         "firewallEnabled": {
-            "type": "bool"
+            "type": "bool",
+            "defaultValue" : "false"
         },
         "bastionEnabled": {
-            "type": "bool"
+            "type": "bool",
+            "defaultValue" : "false"
         },
         "tagsByResource": {
             "type": "object",

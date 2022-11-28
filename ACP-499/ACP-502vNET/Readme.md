@@ -7,7 +7,7 @@ Documentation: https://learn.microsoft.com/en-us/azure/center-sap-solutions/prep
 [![RG2 ARM](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FRG-ARM%2FRGtemplateCentralUS.json)
 
 1. Networking <br/>
-1.1 [vNET - ARM template](https://github.com/ge-duta/azure-acp-public/tree/master/ACP-499/ACP-502vNET/vnet-subnets%20ARM)  
+1.1 [vNET - ARM template - Just for refrenece - Customer already have the vNET created](https://github.com/ge-duta/azure-acp-public/tree/master/ACP-499/ACP-502vNET/vnet-subnets%20ARM)  
 1.2 [![Deploy to Azure vNET](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2Fvnet-subnets%2520ARM%2Fvnet-template.json)   
 
 
