@@ -24,7 +24,7 @@ Documentation: https://learn.microsoft.com/en-us/azure/center-sap-solutions/prep
 
 3. Availability Sets  
 3.1 [AvSet ARM template](https://github.com/ge-duta/azure-acp-public/tree/master/ACP-499/ACP-502vNET/AvSet-ARM)    
-3.2 [![Deploy to Azure ](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FAvSet-ARM%2FAvSet-ARM-template.json)  
+3.2 [![Deploy to Azure ](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FAvSet-ARM%2FAvSet-ARM-template.json)  </br>
 
 4. Load Balancers  
 4.1 [APP Load Balancer -  ARM Template](https://github.com/ge-duta/azure-acp-public/tree/master/ACP-499/ACP-502vNET/LB-APP)      
