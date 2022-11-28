@@ -20,11 +20,21 @@
         },
         "privateIPAddress": {
             "type": "string",
-            "defaultValue": "192.168.1.100"
+            "defaultValue": "192.168.1.100",
+            "metadata": {
+                "description": "example: 192.168.1.100, 10.75.101.100, 10.75.101.101"
+            }
         },
         "lbProbeName": {
             "type": "string",
-            "defaultValue": "probe-hana"
+            "defaultValue": "backend-app"
+        },
+        "port": {
+            "type": "int",
+            "defaultValue": 62101,
+            "metadata": {
+                "description": "example: 62503, 62101, 62000"
+            }
         },
         "lbBackEndName": {
             "type": "string",
@@ -76,7 +86,7 @@
                         "name": "[parameters('lbProbeName')]",//"probe-hana",
                         "properties": {
                             "protocol": "Tcp",
-                            "port": 62503,
+                            "port": "[parameters('port')]",//62503,
                             "requestPath": null,
                             "intervalInSeconds": 5,
                             "numberOfProbes": 1
