@@ -1,0 +1,39 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.1",
+    "parameters": {
+        "rgName": {
+            "type": "string",
+            "defaultValue" : "RG-useast2dev-devSAP",
+            "metadata": {
+                "description": "example: RG-useast2dev-devSAP or RG-centralusdev-devSAP"
+            }
+        },
+        "rgLocation": {
+            "type": "string",
+            "defaultValue": "eastus2",
+            "metadata": {
+                "description": "example: centerus or eastus2"
+            }
+        },
+        "tags": {
+            "type": "object",
+            "defaultValue": {"Environment" : "DEV"},
+            "metadata": {
+                "description": "example: Application:SAP-HANA-DEVTest"
+            }
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2018-05-01",
+            "location": "[parameters('rgLocation')]",
+            "name": "[parameters('rgName')]",
+            "properties": {},
+            "tags": "[parameters('tags')]"
+        }
+    ],
+    "outputs": {}
+}
