@@ -28,11 +28,11 @@ Documentation: https://learn.microsoft.com/en-us/azure/center-sap-solutions/prep
 [![Deploy to Azure ](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FAvSet-ARM%2FAvSet-ARM-templateCentralUS.json)  </br>
 
 4. Load Balancers  
-4.1 [APP Load Balancer](https://github.com/ge-duta/azure-acp-public/tree/master/ACP-499/ACP-502vNET/LB-APP)      
+4.1 [APP Load Balancer](https://github.com/ge-duta/azure-acp-public/tree/master/ACP-499/ACP-502vNET/LB-APP) 
 [![Deploy to Azure ](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FLB-APP%2Ftemplate.json)  </br>
-4.2 [DB Load Balancer](https://github.com/ge-duta/azure-acp-public/blob/master/ACP-499/ACP-502vNET/LB-DB-ARM/lb-db-template.json)      
+4.2 [DB Load Balancer](https://github.com/ge-duta/azure-acp-public/blob/master/ACP-499/ACP-502vNET/LB-DB-ARM/lb-db-template.json)
 [![Deploy to Azure ](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FLB-DB-ARM%2Flb-db-template.json)  </br>
-4.3 [ASCS Load Balancer](https://github.com/ge-duta/azure-acp-public/tree/master/ACP-499/ACP-502vNET/LB-APP)      
+4.3 [ASCS Load Balancer](https://github.com/ge-duta/azure-acp-public/tree/master/ACP-499/ACP-502vNET/LB-APP)
 [![Deploy to Azure ](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FLB-APP%2Ftemplate.json)  </br>
 
 

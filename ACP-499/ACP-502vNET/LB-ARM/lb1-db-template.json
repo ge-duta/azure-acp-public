@@ -14,11 +14,7 @@
             "type": "string",
             "defaultValue": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet/subnets/useast2dev-saphana"
         },
-        "loadBalancerNameDB": {
-            "type": "string",
-            "defaultValue": "lbuseast2devtestSAPhana"
-        },
-        "loadBalancerFrontendHANADB": {
+        "lbFrontEndName": {
             "type": "string",
             "defaultValue": "FrontEndIP"
         },
@@ -26,13 +22,13 @@
             "type": "string",
             "defaultValue": "192.168.1.100"
         },
-        "probePortHANADB": {
+        "lbProbeName": {
             "type": "string",
             "defaultValue": "probe-hana"
         },
-        "backendPoolHANADB": {
+        "lbBackEndName": {
             "type": "string",
-            "defaultValue": "backendpoolDB"
+            "defaultValue": "backendDBVMs"
         },
         "sku": {
             "type": "string",
@@ -54,7 +50,7 @@
             "properties": {
                 "frontendIPConfigurations": [
                     {
-                        "name": "FrontEndIP",
+                        "name": "[parameters('lbFrontEndName')]",//"FrontEndIP",
                         "properties": {
                             "privateIPAddress": "[parameters('privateIPAddress')]",
                             "privateIPAddressVersion": "IPv4",
@@ -72,12 +68,12 @@
                 ],
                 "backendAddressPools": [
                     {
-                        "name": "backend"
+                        "name": "[parameters('lbBackEndName')]"//"backend"
                     }
                 ],
                 "probes": [
                     {
-                        "name": "probe-hana",
+                        "name": "[parameters('lbProbeName')]",//"probe-hana",
                         "properties": {
                             "protocol": "Tcp",
                             "port": 62503,
@@ -89,10 +85,11 @@
                 ],
                 "loadBalancingRules": [
                     {
-                        "name": "[parameters('loadBalancerNameDB')]",
+                        "name": "lb-hana-failover",
                         "properties": {
                             "frontendIPConfiguration": {
-                                "id": "[resourceId('Microsoft.Network/loadBalancers/frontendIpConfigurations', parameters('loadBalancerNameDB'), parameters('loadBalancerFrontendHANADB'))]"
+                                //"id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/RG-useast2dev-devSAP/providers/Microsoft.Network/loadBalancers/lbuseast2devtestSAPhana/frontendIPConfigurations/FrontEndIP"
+                                "id": "[resourceId('Microsoft.Network/loadBalancers/frontendIpConfigurations', parameters('name'), parameters('lbFrontEndName'))]"
                             },
                             "frontendPort": 0,
                             "backendPort": 0,
@@ -101,13 +98,15 @@
                             "protocol": "All",
                             "loadDistribution": "Default",
                             "probe": {
-                                "id": "[resourceId('Microsoft.Network/loadBalancers/probes', parameters('loadBalancerNameDB'), parameters('probePortHANADB'))]"
+                                //"id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/RG-useast2dev-devSAP/providers/Microsoft.Network/loadBalancers/lbuseast2devtestSAPhana/probes/probe-hana"
+                                "id": "[resourceId('Microsoft.Network/loadBalancers/probes', parameters('name'), parameters('lbProbeName'))]"
                             },
                             "disableOutboundSnat": true,
                             "enableTcpReset": false,
                             "backendAddressPools": [
                                 {
-                                    "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', parameters('loadBalancerNameDB'), parameters('backendPoolHANADB'))]"
+                                    //"id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/RG-useast2dev-devSAP/providers/Microsoft.Network/loadBalancers/lbuseast2devtestSAPhana/backendAddressPools/backend"
+                                    "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', parameters('name'), parameters('lbBackEndName'))]"
                                 }
                             ]
                         }
@@ -123,3 +122,11 @@
         }
     ]
 }
+
+
+
+
+
+
+
+

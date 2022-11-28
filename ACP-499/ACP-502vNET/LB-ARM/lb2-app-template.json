@@ -1,0 +1,132 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "type": "string",
+            "defaultValue": "lbuseast2devtestSAPhana"
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "eastus2"
+        },
+        "subnetid": {
+            "type": "string",
+            "defaultValue": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet/subnets/useast2dev-saphana"
+        },
+        "lbFrontEndName": {
+            "type": "string",
+            "defaultValue": "FrontEndIP"
+        },
+        "privateIPAddress": {
+            "type": "string",
+            "defaultValue": "192.168.1.100"
+        },
+        "lbProbeName": {
+            "type": "string",
+            "defaultValue": "probe-hana"
+        },
+        "lbBackEndName": {
+            "type": "string",
+            "defaultValue": "backendDBVMs"
+        },
+        "sku": {
+            "type": "string",
+            "defaultValue": "Standard"
+        },
+        "tier": {
+            "type": "string",
+            "defaultValue": "Regional"
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2021-05-01",
+            "name": "[parameters('name')]",
+            "type": "Microsoft.Network/loadBalancers",
+            "location": "[parameters('location')]",
+            "dependsOn": [],
+            "tags": {},
+            "properties": {
+                "frontendIPConfigurations": [
+                    {
+                        "name": "[parameters('lbFrontEndName')]",//"FrontEndIP",
+                        "properties": {
+                            "privateIPAddress": "[parameters('privateIPAddress')]",
+                            "privateIPAddressVersion": "IPv4",
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "[parameters('subnetid')]"
+                            }
+                        },
+                        "zones": [
+                            "2",
+                            "3",
+                            "1"
+                        ]
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "[parameters('lbBackEndName')]"//"backend"
+                    }
+                ],
+                "probes": [
+                    {
+                        "name": "[parameters('lbProbeName')]",//"probe-hana",
+                        "properties": {
+                            "protocol": "Tcp",
+                            "port": 62503,
+                            "requestPath": null,
+                            "intervalInSeconds": 5,
+                            "numberOfProbes": 1
+                        }
+                    }
+                ],
+                "loadBalancingRules": [
+                    {
+                        "name": "lb-hana-failover",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                //"id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/RG-useast2dev-devSAP/providers/Microsoft.Network/loadBalancers/lbuseast2devtestSAPhana/frontendIPConfigurations/FrontEndIP"
+                                "id": "[resourceId('Microsoft.Network/loadBalancers/frontendIpConfigurations', parameters('name'), parameters('lbFrontEndName'))]"
+                            },
+                            "frontendPort": 0,
+                            "backendPort": 0,
+                            "enableFloatingIP": true,
+                            "idleTimeoutInMinutes": 30,
+                            "protocol": "All",
+                            "loadDistribution": "Default",
+                            "probe": {
+                                //"id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/RG-useast2dev-devSAP/providers/Microsoft.Network/loadBalancers/lbuseast2devtestSAPhana/probes/probe-hana"
+                                "id": "[resourceId('Microsoft.Network/loadBalancers/probes', parameters('name'), parameters('lbProbeName'))]"
+                            },
+                            "disableOutboundSnat": true,
+                            "enableTcpReset": false,
+                            "backendAddressPools": [
+                                {
+                                    //"id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/RG-useast2dev-devSAP/providers/Microsoft.Network/loadBalancers/lbuseast2devtestSAPhana/backendAddressPools/backend"
+                                    "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', parameters('name'), parameters('lbBackEndName'))]"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "inboundNatRules": [],
+                "outboundRules": []
+            },
+            "sku": {
+                "name": "[parameters('sku')]",
+                "tier": "[parameters('tier')]"
+            }
+        }
+    ]
+}
+
+
+
+
+
+
+
+
