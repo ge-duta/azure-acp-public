@@ -4,7 +4,6 @@ East US 2 Zone 1 | East US 2 Zone 2 | Central US Zone 1 |
 ---|---|---
 [Deploy Resource Group East US 2](https://github.com/ge-duta/azure-acp-public/tree/master/ACP-499/ACP-502vNET/RG-ARM)
 [![Deploy to Azure vNET](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FRG-ARM%2FRGtemplate.json)  |  |
-
 [Deploy Resource Group Central US](https://github.com/ge-duta/azure-acp-public/tree/master/ACP-499/ACP-502vNET/RG-ARM)
 [![Deploy to Azure vNET](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FRG-ARM%2FRGtemplate.json)
 
