@@ -4,7 +4,7 @@
     "parameters": {
         "name": {
             "type": "string",
-            "defaultValue": "lbuseast2devtestSAPhana"
+            "defaultValue": "lbuseast2devtestSAPASCS"
         },
         "location": {
             "type": "string",
@@ -12,7 +12,7 @@
         },
         "subnetid": {
             "type": "string",
-            "defaultValue": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet/subnets/useast2dev-saphana"
+            "defaultValue": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet/subnets/useast2dev-sapapp"
         },
         "lbFrontEndName": {
             "type": "string",
@@ -20,15 +20,25 @@
         },
         "privateIPAddress": {
             "type": "string",
-            "defaultValue": "192.168.1.100"
+            "defaultValue": "10.75.101.101",
+            "metadata": {
+                "description": "example: 192.168.1.100, 10.75.101.100, 10.75.101.101"
+            }
         },
         "lbProbeName": {
             "type": "string",
-            "defaultValue": "probe-hana"
+            "defaultValue": "probe-ascs"
+        },
+        "port": {
+            "type": "int",
+            "defaultValue": 62000,
+            "metadata": {
+                "description": "example: 62503, 62101, 62000"
+            }
         },
         "lbBackEndName": {
             "type": "string",
-            "defaultValue": "backendDBVMs"
+            "defaultValue": "backend-ascs"
         },
         "sku": {
             "type": "string",
@@ -76,7 +86,7 @@
                         "name": "[parameters('lbProbeName')]",//"probe-hana",
                         "properties": {
                             "protocol": "Tcp",
-                            "port": 62503,
+                            "port": "[parameters('port')]",//62503,
                             "requestPath": null,
                             "intervalInSeconds": 5,
                             "numberOfProbes": 1
@@ -85,7 +95,7 @@
                 ],
                 "loadBalancingRules": [
                     {
-                        "name": "lb-hana-failover",
+                        "name": "lb-ascs-failover",
                         "properties": {
                             "frontendIPConfiguration": {
                                 //"id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/RG-useast2dev-devSAP/providers/Microsoft.Network/loadBalancers/lbuseast2devtestSAPhana/frontendIPConfigurations/FrontEndIP"

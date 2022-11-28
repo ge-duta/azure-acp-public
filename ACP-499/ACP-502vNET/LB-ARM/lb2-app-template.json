@@ -4,7 +4,7 @@
     "parameters": {
         "name": {
             "type": "string",
-            "defaultValue": "lbuseast2devtestSAPhana"
+            "defaultValue": "lbuseast2devtestSAPAPP"
         },
         "location": {
             "type": "string",
@@ -20,7 +20,7 @@
         },
         "privateIPAddress": {
             "type": "string",
-            "defaultValue": "192.168.1.100",
+            "defaultValue": "10.75.101.100",
             "metadata": {
                 "description": "example: 192.168.1.100, 10.75.101.100, 10.75.101.101"
             }
