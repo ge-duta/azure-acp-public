@@ -14,8 +14,8 @@ Documentation: https://learn.microsoft.com/en-us/azure/center-sap-solutions/prep
 3.2 [![Deploy to Azure ](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FAvSet-ARM%2FAvSet-ARM-template.json)  
 
 4. Load Balancers  
-4.1 [Database Load Balancer -  ARM Template](https://github.com/ge-duta/azure-acp-public/tree/master/ACP-499/ACP-502vNET/LB-DB-ARM)      
-4.1.1 [![Deploy to Azure ](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FLB-DB-ARM%2Flb-db-template.json)  
+4.1 [APP Load Balancer -  ARM Template](https://github.com/ge-duta/azure-acp-public/tree/master/ACP-499/ACP-502vNET/LB-APP)      
+4.1.1 [![Deploy to Azure ](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https://raw.githubusercontent.com/ge-duta/azure-acp-public/master/ACP-499/ACP-502vNET/LB-APP/template.json)  
 
 4.2 [Application-Load Balancer ARM Template]
 4.2.1
