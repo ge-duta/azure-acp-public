@@ -1,0 +1,97 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "sku": {
+            "type": "string"
+        },
+        "tier": {
+            "type": "string"
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2021-05-01",
+            "name": "[parameters('name')]",
+            "type": "Microsoft.Network/loadBalancers",
+            "location": "[parameters('location')]",
+            "dependsOn": [],
+            "tags": {},
+            "properties": {
+                "frontendIPConfigurations": [
+                    {
+                        "name": "FrontEnd",
+                        "properties": {
+                            "privateIPAddress": "10.75.101.100",
+                            "privateIPAddressVersion": "IPv4",
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet/subnets/useast2dev-sapapp"
+                            }
+                        },
+                        "zones": [
+                            "2",
+                            "3",
+                            "1"
+                        ]
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "backend"
+                    }
+                ],
+                "probes": [
+                    {
+                        "name": "probe-app",
+                        "properties": {
+                            "protocol": "Tcp",
+                            "port": 62101,
+                            "requestPath": null,
+                            "intervalInSeconds": 5,
+                            "numberOfProbes": 1
+                        }
+                    }
+                ],
+                "loadBalancingRules": [
+                    {
+                        "name": "InboundRule",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/loadBalancers/lbuseast2devtestSAPAPP/frontendIPConfigurations/FrontEnd"
+                            },
+                            "frontendPort": 80,
+                            "backendPort": 80,
+                            "enableFloatingIP": false,
+                            "idleTimeoutInMinutes": 4,
+                            "protocol": "TCP",
+                            "loadDistribution": "Default",
+                            "probe": {
+                                "id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/loadBalancers/lbuseast2devtestSAPAPP/probes/probe-app"
+                            },
+                            "disableOutboundSnat": true,
+                            "enableTcpReset": false,
+                            "backendAddressPools": [
+                                {
+                                    "id": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/loadBalancers/lbuseast2devtestSAPAPP/backendAddressPools/backend"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "inboundNatRules": [],
+                "outboundRules": []
+            },
+            "sku": {
+                "name": "[parameters('sku')]",
+                "tier": "[parameters('tier')]"
+            }
+        }
+    ]
+}

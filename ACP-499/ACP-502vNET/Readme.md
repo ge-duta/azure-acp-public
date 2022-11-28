@@ -1,9 +1,13 @@
 Documentation: https://learn.microsoft.com/en-us/azure/center-sap-solutions/prepare-network
 
+[Deploy Resource Group](https://github.com/ge-duta/azure-acp-public/tree/master/ACP-499/ACP-502vNET/RG-ARM)
+![Deploy to Azure vNET](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2FRG-ARM%2FRGtemplate.json)   
+
+
 1. Networking <br/>
 1.1 [vNET - ARM template](https://github.com/ge-duta/azure-acp-public/tree/master/ACP-499/ACP-502vNET/vnet-subnets%20ARM)  
 1.2 [![Deploy to Azure vNET](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-502vNET%2Fvnet-subnets%2520ARM%2Fvnet-template.json)   
-![Best Practice Check](https://azurequickstartsservice.blob.core.windows.net/badges/managementgroup-deployments/create-subscription/BestPracticeResult.svg)
+[comment]: <> (![Best Practice Check](https://azurequickstartsservice.blob.core.windows.net/badges/managementgroup-deployments/create-subscription/BestPracticeResult.svg))
 
 2. Proximity Placement Group  
 2.1 [PPG - ARM template](https://github.com/ge-duta/azure-acp-public/tree/master/ACP-499/ACP-502vNET/PPG-ARM)  
