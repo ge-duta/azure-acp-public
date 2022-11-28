@@ -8,7 +8,7 @@
         },
         "virtualMachineName1": {
             "type": "string",
-            "defaultValue" : "sapdevtest-hana-vm01"
+            "defaultValue" : "sapdevtest-hana-vm02"
         },
         "adminUsername": {
             "type": "string",
@@ -16,7 +16,7 @@
         },
         "adminPassword": {
             "type": "secureString",
-            "defaultValue" : "sapdevtest-ascs-vm01"
+            "defaultValue" : "sap10"
         },
         "virtualMachineSize": {
             "type": "string",
@@ -24,13 +24,25 @@
         },
         "dataDisks1": {
             "type": "array",
-            "defaultValue" : [{"lun": 0,"createOption": "attach","deleteOption": "Detach","caching": "ReadOnly","writeAcceleratorEnabled": false,"id": null,"name": "sapdevtest-hana-vm01_DataDisk_0","storageAccountType": null,"diskSizeGB": null,"diskEncryptionSet": null}]
+            "defaultValue" : [
+                {
+                    "lun": 0,
+                    "createOption": "attach",
+                    "deleteOption": "Detach",
+                    "caching": "ReadOnly",
+                    "writeAcceleratorEnabled": false,
+                    "id": null,
+                    "name": "sapdevtest-hana-vm02_DataDisk_0",
+                    "storageAccountType": null,
+                    "diskSizeGB": null,
+                    "diskEncryptionSet": null
+                    }]
         },
         "dataDiskResources1": {
             "type": "array",
             "defaultValue" : [
                 {
-                    "name": "sapdevtest-hana-vm01_DataDisk_0",
+                    "name": "sapdevtest-hana-vm02_DataDisk_0",
                     "sku": "Premium_LRS",
                     "properties": {
                         "diskSizeGB": 64,
@@ -52,11 +64,11 @@
         },
         "networkInterfaceName1": {
             "type": "string",
-            "defaultValue": "sapdevtest-hana-vm01-nic1"
+            "defaultValue": "sapdevtest-hana-vm02-nic1"
         },
         "PrivateIP-NIC1":{
             "type": "string",
-            "defaultValue": "192.168.1.5"
+            "defaultValue": "192.168.1.6"
         },
         "subnetName2": {
         "type": "string",
@@ -64,11 +76,11 @@
         },
         "networkInterfaceName2": {
             "type": "string",
-            "defaultValue": "sapdevtest-hana-vm01-nic2"
+            "defaultValue": "sapdevtest-hana-vm02-nic2"
         },
         "PrivateIP-NIC2":{
             "type": "string",
-            "defaultValue": "192.168.4.6"//"192.168.1.5"
+            "defaultValue": "192.168.4.5"//"192.168.1.5"
         },
         "subnetName3": {
         "type": "string",
@@ -76,11 +88,11 @@
         },
         "networkInterfaceName3": {
             "type": "string",
-            "defaultValue": "ssapdevtest-hana-vm01-nic3"
+            "defaultValue": "ssapdevtest-hana-vm02-nic3"
         },
         "PrivateIP-NIC3":{
             "type": "string",
-            "defaultValue": "10.75.101.236"
+            "defaultValue": "10.75.101.235"
         },
         "enableAcceleratedNetworking": {
             "type": "bool",
@@ -92,11 +104,11 @@
         },
         "proximityPlacementGroupId": {
             "type": "string",
-            "defaultValue" : "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/RG-useast2dev-devSAP/providers/Microsoft.Compute/proximityPlacementGroups/PPGuseast2devtestSAPhana-Zone1"
+            "defaultValue" : "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/RG-useast2dev-devSAP/providers/Microsoft.Compute/proximityPlacementGroups/PPGuseast2devtestSAPhana-Zone2"
         },
         "zone": {
             "type": "string",
-            "defaultValue" : "1"
+            "defaultValue" : "2"
         }
     },
     "variables": {
