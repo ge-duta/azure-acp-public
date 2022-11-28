@@ -11,14 +11,14 @@
         },
         "rgLocation": {
             "type": "string",
-            "defaultValue": "[resourceGroup().location]",
+            "defaultValue": "eastus2",
             "metadata": {
                 "description": "example: centerus or eastus2"
             }
         },
         "tags": {
             "type": "object",
-            "defaultValue": {"Application ": "SAP-HANA-DEVTest"},
+            "defaultValue": {"Environment" : "DEV"},
             "metadata": {
                 "description": "example: Application:SAP-HANA-DEVTest"
             }

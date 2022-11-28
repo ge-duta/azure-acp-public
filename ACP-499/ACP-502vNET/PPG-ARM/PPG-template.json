@@ -8,19 +8,19 @@
         },
         "ppgName": {
             "type": "string",
-            "defaultValue": "SAP4HANA-PPE-EUS2-ZoneA"
+            "defaultValue": "PPGuseast2devtestSAPhana-Zone1",
+            "metadata": {
+                "description": "example: PPGuseast2devtestSAPhana-Zone1, PPGuseast2devtestSAPhana-Zone2, PPGuscentraldevtestSAPhana-Zone1"
+            }
         },
         "tagsByResource": {
             "type": "object",
             "defaultValue": {
-                    "Application ": "SAP-HANA-DEVTest",
-                    "SystemID ": "SAP",
-                    "Creator": "Owner",
                     "CreationDate ": "[utcNow('yyyy-MM-dd')]",
-                    "Environment ": "dev"
+                    "Environment ": "DEV"
                             },
             "metadata": {
-                "description": "Optional tags provided by the user via createUiDefinition.json"
+                "description": "tags"
             }
         }
     },
