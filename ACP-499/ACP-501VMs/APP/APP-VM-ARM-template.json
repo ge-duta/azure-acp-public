@@ -3,35 +3,49 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "location": {
-            "type": "string"
-        },
-        "networkInterfaceName1": {
-            "type": "string"
-        },
-        "enableAcceleratedNetworking": {
-            "type": "bool"
-        },
-        "backendPoolId": {
-            "type": "string"
-        },
-        "subnetName": {
-            "type": "string"
-        },
-        "virtualNetworkId": {
-            "type": "string"
-        },
-        "virtualMachineName": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "eastus2"
         },
         "virtualMachineName1": {
             "type": "string"
         },
-        "virtualMachineComputerName1": {
+        "adminUsername": {
+            "type": "string",
+            "defaultValue" : "azureadmin"
+        },
+        "adminPassword": {
+            "type": "secureString",
+            "defaultValue" : ""
+        },
+        "virtualMachineSize": {
+            "type": "string",
+            "defaultValue": "Standard_E2bs_v5"
+        },
+        "networkInterfaceName1": {
+            "type": "string",
+            "defaultValue": "sapdevtest-ap-vm01-nic1"
+        },
+        "subnetName": {
+            "type": "string",
+            "defaultValue": "useast2dev-sapapp"
+        },
+        "virtualNetworkId": {
+            "type": "string",
+            "defaultValue": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet"
+        },
+        "virtualMachineName": {
+            "type": "string"
+        },
+        "enableAcceleratedNetworking": {
+            "type": "bool",
+            "defaultValue": true
+        },
+/*         "virtualMachineComputerName1": {
             "type": "string"
         },
         "virtualMachineRG": {
             "type": "string"
-        },
+        }, */
         "osDiskType": {
             "type": "string"
         },
@@ -39,25 +53,47 @@
             "type": "string"
         },
         "dataDisks1": {
-            "type": "array"
+            "type": "array",
+            "defaultValue": [
+                {
+                    "lun": 0,
+                    "createOption": "attach",
+                    "deleteOption": "Detach",
+                    "caching": "ReadOnly",
+                    "writeAcceleratorEnabled": false,
+                    "id": null,
+                    "name": "sapdevtest-ap-vm01_DataDisk_0",
+                    "storageAccountType": null,
+                    "diskSizeGB": null,
+                    "diskEncryptionSet": null
+                }
+            ]
         },
         "dataDiskResources1": {
-            "type": "array"
+            "type": "array",
+            "defaultValue": [
+                {
+                    "name": "sapdevtest-ap-vm01_DataDisk_0",
+                    "sku": "Premium_LRS",
+                    "properties": {
+                        "diskSizeGB": 64,
+                        "creationData": {
+                            "createOption": "empty"
+                        }
+                    }
+                }
+            ]
         },
-        "virtualMachineSize": {
-            "type": "string"
-        },
-        "nicDeleteOption": {
-            "type": "string"
-        },
-        "adminUsername": {
-            "type": "string"
+        "backendPoolId": {
+            "type": "string",
+            "defaultValue": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/loadBalancers/lbuseast2devtestSAPAPP/backendAddressPools/backendapppool"
         },
         "proximityPlacementGroupId": {
             "type": "string"
         },
         "zone": {
-            "type": "string"
+            "type": "string",
+            "defaultValue" : "1"
         }
     },
     "variables": {
@@ -91,10 +127,7 @@
                 ],
                 "enableAcceleratedNetworking": "[parameters('enableAcceleratedNetworking')]"
             },
-            "tags": {
-                "Project": "SAP HANA",
-                "Environment": "DEV"
-            }
+            "tags": {}
         },
         {
             "name": "[parameters('dataDiskResources1')[copyIndex()].name]",
@@ -110,10 +143,7 @@
                 "count": "[length(parameters('dataDiskResources1'))]"
             },
             "zones": "[if(contains(parameters('dataDiskResources1')[copyIndex()].sku, '_ZRS'), json('null'), array(1))]",
-            "tags": {
-                "Project": "SAP HANA",
-                "Environment": "DEV"
-            }
+            "tags": {}
         },
         {
             "name": "[parameters('virtualMachineName1')]",
@@ -166,17 +196,15 @@
                         {
                             "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceName1'))]",
                             "properties": {
-                                "deleteOption": "[parameters('nicDeleteOption')]"
+                                "deleteOption": "Detach"
                             }
                         }
                     ]
                 },
                 "osProfile": {
-                    "computerName": "[parameters('virtualMachineComputerName1')]",
+                    "computerName": "[parameters('virtualMachineName1')]",
                     "adminUsername": "[parameters('adminUsername')]",
-                    "linuxConfiguration": {
-                        "disablePasswordAuthentication": true
-                    }
+                    "adminPassword": "[parameters('adminPassword')]"
                 },
                 "proximityPlacementGroup": {
                     "id": "[parameters('proximityPlacementGroupId')]"
@@ -187,10 +215,7 @@
                     }
                 }
             },
-            "tags": {
-                "Project": "SAP HANA",
-                "Environment": "DEV"
-            },
+            "tags": {},
             "zones": [
                 "1"
             ]
