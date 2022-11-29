@@ -163,8 +163,7 @@
             "location": "[parameters('location')]",
             "dependsOn": [
                 "managedDiskResources",
-                "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName1'))]",
-                "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName2'))]"
+                "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName1'))]"
             ],
             "properties": {
                 "hardwareProfile": {
