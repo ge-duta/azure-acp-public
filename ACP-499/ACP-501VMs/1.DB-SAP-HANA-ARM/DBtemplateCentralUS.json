@@ -22,15 +22,15 @@
             "type": "string",
             "defaultValue" : "Standard_E8bs_v5"
         },
-        "imageReference": {
-            "type": "array",
-            "defaultValue" : [{
-                        "publisher": "RedHat",
-                        "offer": "RHEL-SAP-HA",
-                        "sku": "86sapha-gen2",
-                        "version": "latest"
-            }]
-        },
+        //"imageReference": {
+         //   "type": "array",
+        //    "defaultValue" : [{
+         //               "publisher": "RedHat",
+         //               "offer": "RHEL-SAP-HA",
+         //               "sku": "86sapha-gen2",
+        //                "version": "latest"
+         //   }]
+        //},
         "dataDisks1": {
             "type": "array",
             "defaultValue" : [{"lun": 0,"createOption": "attach","deleteOption": "Detach","caching": "ReadOnly","writeAcceleratorEnabled": false,"id": null,"name": "sapdevtest-hana-vm03_DataDisk_0","storageAccountType": null,"diskSizeGB": null,"diskEncryptionSet": null}]
