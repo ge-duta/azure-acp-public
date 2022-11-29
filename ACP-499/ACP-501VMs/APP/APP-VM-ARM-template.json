@@ -153,7 +153,7 @@
                 "name": "managedDiskResources",
                 "count": "[length(parameters('dataDiskResources1'))]"
             },
-            "zones": "[if(contains(parameters('dataDiskResources1')[copyIndex()].sku, '_ZRS'), json('null'), array(1))]",
+            "zones": ["[parameters('zone')]"],
             "tags": {}
         },
         {
