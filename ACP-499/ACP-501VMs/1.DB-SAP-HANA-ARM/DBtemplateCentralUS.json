@@ -16,7 +16,7 @@
         },
         "adminPassword": {
             "type": "secureString",
-            "defaultValue" : "sapdevtest-ascs-vm01"
+            "defaultValue" : "Succ3s@2022!"
         },
         "virtualMachineSize": {
             "type": "string",
@@ -24,13 +24,13 @@
         },
         "dataDisks1": {
             "type": "array",
-            "defaultValue" : [{"lun": 0,"createOption": "attach","deleteOption": "Detach","caching": "ReadOnly","writeAcceleratorEnabled": false,"id": null,"name": "sapdevtest-hana-vm01_DataDisk_0","storageAccountType": null,"diskSizeGB": null,"diskEncryptionSet": null}]
+            "defaultValue" : [{"lun": 0,"createOption": "attach","deleteOption": "Detach","caching": "ReadOnly","writeAcceleratorEnabled": false,"id": null,"name": "sapdevtest-hana-vm03_DataDisk_0","storageAccountType": null,"diskSizeGB": null,"diskEncryptionSet": null}]
         },
         "dataDiskResources1": {
             "type": "array",
             "defaultValue" : [
                 {
-                    "name": "sapdevtest-hana-vm01_DataDisk_0",
+                    "name": "sapdevtest-hana-vm03_DataDisk_0",
                     "sku": "Premium_LRS",
                     "properties": {
                         "diskSizeGB": 64,
@@ -44,55 +44,31 @@
         
         "virtualNetworkId": {
             "type": "string",
-            "defaultValue" : "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet"
+            "defaultValue" : "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USCentral-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/uscentraldev-testvnet"
         },
         "subnetName": {
             "type": "string",
-            "defaultValue" : "useast2dev-saphana"
+            "defaultValue" : "uscentralusdevsapapp"
         },
         "networkInterfaceName1": {
             "type": "string",
-            "defaultValue": "sapdevtest-hana-vm01-nic1"
+            "defaultValue": "sapdevtest-hana-vm03-nic1"
         },
         "PrivateIP-NIC1":{
             "type": "string",
-            "defaultValue": "192.168.1.5"
-        },
-        "subnetName2": {
-        "type": "string",
-        "defaultValue" : "useast2-sapHA2"//"useast2dev-saphana"
-        },
-        "networkInterfaceName2": {
-            "type": "string",
-            "defaultValue": "sapdevtest-hana-vm01-nic2"
-        },
-        "PrivateIP-NIC2":{
-            "type": "string",
-            "defaultValue": "192.168.4.6"//"192.168.1.5"
-        },
-        "subnetName3": {
-        "type": "string",
-        "defaultValue" : "useast2dev-sapapp"
-        },
-        "networkInterfaceName3": {
-            "type": "string",
-            "defaultValue": "ssapdevtest-hana-vm01-nic3"
-        },
-        "PrivateIP-NIC3":{
-            "type": "string",
-            "defaultValue": "10.75.101.236"
+            "defaultValue": "10.88.101.240"
         },
         "enableAcceleratedNetworking": {
             "type": "bool",
             "defaultValue": "true"
         },
-        "backendPoolId": {
-            "type": "string",
-            "defaultValue" : "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/RG-useast2dev-devSAP/providers/Microsoft.Network/loadBalancers/lbuseast2devtestSAPhana/backendAddressPools/backendDBVMs"
-        },
+        //"backendPoolId": {
+         //   "type": "string",
+         //   "defaultValue" : "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/RG-useast2dev-devSAP/providers/Microsoft.Network/loadBalancers/lbuseast2devtestSAPhana/backendAddressPools/backendDBVMs"
+        //},
         "proximityPlacementGroupId": {
             "type": "string",
-            "defaultValue" : "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/RG-useast2dev-devSAP/providers/Microsoft.Compute/proximityPlacementGroups/PPGuseast2devtestSAPhana-Zone1"
+            "defaultValue" : "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/RG-centralusdev-devSAP/providers/Microsoft.Compute/proximityPlacementGroups/PPGuscentraldevtestSAPhana-Zone1"
         },
         "zone": {
             "type": "string",
@@ -102,9 +78,7 @@
     "variables": {
         "vnetId": "[parameters('virtualNetworkId')]",
         "vnetName": "[last(split(variables('vnetId'), '/'))]",
-        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
-        "subnetRef2": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName2'))]",
-        "subnetRef3": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName3'))]"
+        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]"
     },
     "resources": [
         {
@@ -123,56 +97,7 @@
                             },
                             "privateIPAllocationMethod": "Static",
                             "privateIPAddress": "[concat(parameters('PrivateIP-NIC1'))]",
-                            "primary":true,
-                            "loadBalancerBackendAddressPools": [
-                                {
-                                    "id": "[parameters('backendPoolId')]"
-                                }
-                            ]
-                        }
-                    }
-                ],
-                "enableAcceleratedNetworking": "[parameters('enableAcceleratedNetworking')]"
-            }
-        },
-        {
-            "name": "[parameters('networkInterfaceName2')]",
-            "type": "Microsoft.Network/networkInterfaces",
-            "apiVersion": "2021-08-01",
-            "location": "[parameters('location')]",
-            "dependsOn": [],
-            "properties": {
-                "ipConfigurations": [
-                    {
-                        "name": "ipconfig1",
-                        "properties": {
-                            "subnet": {
-                                "id": "[variables('subnetRef2')]"
-                            },
-                            "privateIPAllocationMethod": "Static",
-                            "privateIPAddress": "[concat(parameters('PrivateIP-NIC2'))]"
-                        }
-                    }
-                ],
-                "enableAcceleratedNetworking": "[parameters('enableAcceleratedNetworking')]"
-            }
-        },
-        {
-            "name": "[parameters('networkInterfaceName3')]",
-            "type": "Microsoft.Network/networkInterfaces",
-            "apiVersion": "2021-08-01",
-            "location": "[parameters('location')]",
-            "dependsOn": [],
-            "properties": {
-                "ipConfigurations": [
-                    {
-                        "name": "ipconfig1",
-                        "properties": {
-                            "subnet": {
-                                "id": "[variables('subnetRef3')]"
-                            },
-                            "privateIPAllocationMethod": "Static",
-                            "privateIPAddress": "[concat(parameters('PrivateIP-NIC3'))]"
+                            "primary":true
                         }
                     }
                 ],
@@ -247,20 +172,6 @@
                             "properties": {
                                 "deleteOption": "Detach",
                                 "primary": true
-                            }
-                        },
-                        {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceName2'))]",
-                            "properties": {
-                                "deleteOption": "Detach",
-                                "primary": false
-                            }
-                        },
-                        {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceName3'))]",
-                            "properties": {
-                                "deleteOption": "Detach",
-                                "primary": false
                             }
                         }
                     ]
