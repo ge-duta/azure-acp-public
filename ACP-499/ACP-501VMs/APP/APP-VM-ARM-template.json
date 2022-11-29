@@ -32,10 +32,11 @@
         "virtualNetworkId": {
             "type": "string",
             "defaultValue": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet"
-        },
+        },/* 
         "virtualMachineName": {
-            "type": "string"
-        },
+            "type": "string",
+            "defaultValue": "sapdevtest-ap-vm01"
+        }, */
         "enableAcceleratedNetworking": {
             "type": "bool",
             "defaultValue": true
@@ -47,11 +48,12 @@
             "type": "string"
         }, */
         "osDiskType": {
-            "type": "string"
-        },
+            "type": "string",
+            "defaultValue": "Premium_LRS"
+        },/* 
         "osDiskDeleteOption": {
             "type": "string"
-        },
+        }, */
         "dataDisks1": {
             "type": "array",
             "defaultValue": [
@@ -86,10 +88,11 @@
         },
         "backendPoolId": {
             "type": "string",
-            "defaultValue": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/loadBalancers/lbuseast2devtestSAPAPP/backendAddressPools/backendapppool"
+            "defaultValue": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/RG-useast2dev-devSAP/providers/Microsoft.Network/loadBalancers/lbuseast2devtestSAPAPP/backendAddressPools/backend-app"
         },
         "proximityPlacementGroupId": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/RG-useast2dev-devSAP/providers/Microsoft.Compute/proximityPlacementGroups/PPGuseast2devtestSAPhana-Zone1"
         },
         "zone": {
             "type": "string",
@@ -164,7 +167,7 @@
                         "managedDisk": {
                             "storageAccountType": "[parameters('osDiskType')]"
                         },
-                        "deleteOption": "[parameters('osDiskDeleteOption')]"
+                        "deleteOption": "Detach"
                     },
                     "imageReference": {
                         "publisher": "redhat",
@@ -216,9 +219,7 @@
                 }
             },
             "tags": {},
-            "zones": [
-                "1"
-            ]
+            "zones": ["[parameters('zone')]"]
         }
     ],
     "outputs": {
