@@ -16,7 +16,7 @@
         },
         "adminPassword": {
             "type": "secureString",
-            "defaultValue" : "sap10"
+            "defaultValue" : ""
         },
         "virtualMachineSize": {
             "type": "string",

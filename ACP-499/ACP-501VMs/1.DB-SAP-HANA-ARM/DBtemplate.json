@@ -16,7 +16,7 @@
         },
         "adminPassword": {
             "type": "secureString",
-            "defaultValue" : "sapdevtest-ascs-vm01"
+            "defaultValue" : ""
         },
         "virtualMachineSize": {
             "type": "string",
