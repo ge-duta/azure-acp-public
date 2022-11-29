@@ -26,5 +26,7 @@
 [![Deploy to Azure ](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-501VMs%2FjumpVM%2FJumpVMtemplate.json)  </br>
 
 5. Load runner </br>
-5.1 Load runner VM1
-5.2 Load runner VM2
+5.1 [LoadRunner1 EUS2 Zone1](https://github.com/ge-duta/azure-acp-public/blob/master/ACP-499/ACP-501VMs/LoadRunner/LoadRunnerV1Template.json)      
+[![Deploy to Azure ](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-501VMs%2FLoadRunner%2FLoadRunnerV1Template.json)  </br>
+5.2 [LoadRunner2 EUS2 Zone2](https://github.com/ge-duta/azure-acp-public/blob/master/ACP-499/ACP-501VMs/LoadRunner/LoadRunnerV2Template.json)      
+[![Deploy to Azure ](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-501VMs%2FLoadRunner%2FLoadRunnerV2Template.json)  </br>
