@@ -1,0 +1,57 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "eastus2"
+        },
+        "networkInterfaceName1": {
+            "value": "sapdevtest-loadrunner-vm02-nic1"
+        },
+        "PrivateIP-NIC1":{
+            "value": "10.75.101.232"
+        },        
+        "enableAcceleratedNetworking": {
+            "value": true
+        },
+        "subnetName": {
+            "value": "useast2dev-sapapp"
+        },
+        "virtualNetworkId": {
+            "value": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet"
+        },
+        // "virtualMachineName": {
+        //     "value": "sapdevtest-loadrunner-vm02"
+        // },
+        "virtualMachineName1": {
+            "value": "sapdevtest-loadrunner-vm02"
+        },
+        "virtualMachineComputerName1": {
+            "value": "sapdevtest-loadrunner-vm02"
+        },
+        "virtualMachineRG": {
+            "value": "RG-useast2dev-devSAP"
+        },
+        "osDiskType": {
+            "value": "Premium_LRS"
+        },
+        "osDiskDeleteOption": {
+            "value": "Delete"
+        },
+        "virtualMachineSize": {
+            "value": "Standard_E2bds_v5"
+        },
+        "nicDeleteOption": {
+            "value": "Detach"
+        },
+        "adminUsername": {
+            "value": "loadrunner"
+        },
+        "adminPassword": {
+            "value": null
+        },
+        "zone": {
+            "value": "2"
+        }
+    }
+}
