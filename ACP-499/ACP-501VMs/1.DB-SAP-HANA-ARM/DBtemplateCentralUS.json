@@ -58,9 +58,21 @@
             "type": "string",
             "defaultValue": "10.88.101.240"
         },
+        "subnetName2": {
+            "type": "string",
+            "defaultValue" : "uscentralusdevsaphana"
+        },
+        "networkInterfaceName2": {
+            "type": "string",
+            "defaultValue": "sapdevtest-hana-vm03-nic2"
+        },
+        "PrivateIP-NIC2":{
+            "type": "string",
+            "defaultValue": "192.168.11.5"
+        },
         "enableAcceleratedNetworking": {
             "type": "bool",
-            "defaultValue": "true"
+            "defaultValue": true
         },
         //"backendPoolId": {
          //   "type": "string",
@@ -78,7 +90,9 @@
     "variables": {
         "vnetId": "[parameters('virtualNetworkId')]",
         "vnetName": "[last(split(variables('vnetId'), '/'))]",
-        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]"
+        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
+        "subnetRef2": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName2'))]"
+
     },
     "resources": [
         {
@@ -97,6 +111,29 @@
                             },
                             "privateIPAllocationMethod": "Static",
                             "privateIPAddress": "[concat(parameters('PrivateIP-NIC1'))]",
+                            "primary":true
+                        }
+                    }
+                ],
+                "enableAcceleratedNetworking": "[parameters('enableAcceleratedNetworking')]"
+            }
+        },
+        {
+            "name": "[parameters('networkInterfaceName2')]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2021-08-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig2",
+                        "properties": {
+                            "subnet": {
+                                "id": "[variables('subnetRef2')]"
+                            },
+                            "privateIPAllocationMethod": "Static",
+                            "privateIPAddress": "[concat(parameters('PrivateIP-NIC2'))]",
                             "primary":true
                         }
                     }
@@ -126,7 +163,8 @@
             "location": "[parameters('location')]",
             "dependsOn": [
                 "managedDiskResources",
-                "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName1'))]"
+                "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName1'))]",
+                "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName2'))]"
             ],
             "properties": {
                 "hardwareProfile": {
