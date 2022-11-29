@@ -18,7 +18,13 @@
         },
         "tags": {
             "type": "object",
-            "defaultValue": {"Environment" : "DEV"},
+            "defaultValue": {
+                "Application" : "SAPHANA",
+                "SystemID": "HANA POC",
+                "Creator": "Owner",
+                "CreationDate ": "[utcNow('yyyy-MM-dd')]",
+                "Environment ": "DEV"
+                },
             "metadata": {
                 "description": "example: Application:SAP-HANA-DEVTest"
             }

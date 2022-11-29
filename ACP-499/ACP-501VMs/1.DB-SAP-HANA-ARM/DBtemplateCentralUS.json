@@ -141,9 +141,9 @@
                         "deleteOption": "Detach"
                     },
                     "imageReference": {
-                        "publisher": "redhat",
-                        "offer": "rhel-sap-apps",
-                        "sku": "86sapapps-gen2",
+                        "publisher": "RedHat",
+                        "offer": "RHEL-SAP-HA",
+                        "sku": "86sapha-gen2",
                         "version": "latest"
                     },
                     "copy": [
