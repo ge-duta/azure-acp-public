@@ -16,11 +16,20 @@
         },
         "adminPassword": {
             "type": "secureString",
-            "defaultValue" : "Succ3s@2022!"
+            "defaultValue" : ""
         },
         "virtualMachineSize": {
             "type": "string",
             "defaultValue" : "Standard_E8bs_v5"
+        },
+        "imageReference": {
+            "type": "array",
+            "defaultValue" : [{
+                        "publisher": "RedHat",
+                        "offer": "RHEL-SAP-HA",
+                        "sku": "86sapha-gen2",
+                        "version": "latest"
+            }]
         },
         "dataDisks1": {
             "type": "array",
