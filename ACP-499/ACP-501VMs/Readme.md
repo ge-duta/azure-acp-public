@@ -11,8 +11,8 @@
 2. Application VMS </br>
 2.1 [APP VM EUS2-Zone1](https://github.com/ge-duta/azure-acp-public/blob/master/ACP-499/ACP-501VMs/APP/APP-VM-ARM-template.json)   
 [![Deploy to Azure ](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-501VMs%2FAPP%2FAPP-VM-ARM-template.json)  </br>
-2.2 [APP VM EUS2-Zone1](https://github.com/ge-duta/azure-acp-public/tree/master/ACP-499/ACP-501VMs/APP)   
-[![Deploy to Azure ](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-501VMs%2FAPP%2FAPP-VM01-template.json)  </br>
+2.2 [APP VM EUS2-Zone1](https://github.com/ge-duta/azure-acp-public/blob/master/ACP-499/ACP-501VMs/APP/APP-VM02-EUS2Zone1-template.json)   
+[![Deploy to Azure ](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fge-duta%2Fazure-acp-public%2Fmaster%2FACP-499%2FACP-501VMs%2FAPP%2FAPP-VM02-EUS2Zone1-template.json)  </br>
 
 
 3. ASCS - Central instances </br>
