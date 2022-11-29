@@ -4,11 +4,11 @@
     "parameters": {
         "location": {
             "type": "string",
-            "defaultValue": "eastus2"
+            "defaultValue": "centralus"
         },
         "virtualMachineName1": {
             "type": "string",
-            "defaultValue" : "sapdevtest-hana-vm01"
+            "defaultValue" : "sapdevtest-hana-vm03"
         },
         "adminUsername": {
             "type": "string",
