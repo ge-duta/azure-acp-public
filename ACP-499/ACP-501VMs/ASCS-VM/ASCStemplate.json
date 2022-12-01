@@ -44,11 +44,11 @@
         
         "virtualNetworkId": {
             "type": "string",
-            "defaultValue" : "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet"
+            "defaultValue" : "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/RG-useast2dev-devSAP/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet" //"/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet"
         },
         "subnetName": {
             "type": "string",
-            "defaultValue" : "useast2dev-sapapp"
+            "defaultValue" : "useastus2devsapapp"//"useast2dev-sapapp"
         },
         "networkInterfaceName1": {
             "type": "string",
@@ -56,11 +56,11 @@
         },
         "PrivateIP-NIC1":{
             "type": "string",
-            "defaultValue": "10.75.101.238"
+            "defaultValue": "10.75.101.7"
         },
         "subnetName2": {
         "type": "string",
-        "defaultValue" : "useastus2devsapHA1"
+        "defaultValue" : "useastus2devsapascsHA"//"useastus2devsapHA1"
         },
         "networkInterfaceName2": {
             "type": "string",
@@ -68,11 +68,11 @@
         },
         "PrivateIP-NIC2":{
             "type": "string",
-            "defaultValue": "192.168.3.6"
+            "defaultValue": "10.75.101.45"
         },
         "enableAcceleratedNetworking": {
             "type": "bool",
-            "defaultValue": "true"
+            "defaultValue": true
         },
         "backendPoolId": {
             "type": "string",

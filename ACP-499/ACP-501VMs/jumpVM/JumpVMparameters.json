@@ -9,7 +9,7 @@
         "value": "1"
       },
       "virtualMachineName": {
-        "value": "sapdevtest-jumpserver-vm02"
+        "value": "sapdevtest-jumpserver-vm01"//sapdevtest-jumpserver-vm02"
       },
       "adminUsername": {
         "value": "azureadmin"
@@ -21,13 +21,13 @@
         "value": null
       },
       "virtualNetworkId": {
-        "value": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet"
+        "value": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/RG-useast2dev-devSAP/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet"//"/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet"
       },
       "networkInterfaceName1": {
-        "value": "sapdevtest-jumpserver-vm01-nic2"
+        "value": "sapdevtest-jumpserver-vm01-nic1"// "sapdevtest-jumpserver-vm01-nic2"
       },
       "subnetName": {
-        "value": "useast2dev-sapapp"
+        "value": "useastus2devsapapp"//"useast2dev-sapapp"
       },
       "privateIP": {
         "value": "10.75.101.11"

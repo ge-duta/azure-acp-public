@@ -56,11 +56,11 @@
         
         "virtualNetworkId": {
             "type": "string",
-            "defaultValue" : "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet"
+            "defaultValue" : "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/RG-useast2dev-devSAP/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet"//"/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet"
         },
         "subnetName": {
             "type": "string",
-            "defaultValue" : "useast2dev-saphana"
+            "defaultValue" : "useastus2devsapapp"// "useast2dev-saphana"
         },
         "networkInterfaceName1": {
             "type": "string",
@@ -68,11 +68,11 @@
         },
         "PrivateIP-NIC1":{
             "type": "string",
-            "defaultValue": "192.168.1.6"
+            "defaultValue": "10.75.101.10"//"192.168.1.6"
         },
         "subnetName2": {
         "type": "string",
-        "defaultValue" : "useast2-sapHA2"//"useast2dev-saphana"
+        "defaultValue" : "useastus2devsaphana"//"useast2-sapHA2"//"useast2dev-saphana"
         },
         "networkInterfaceName2": {
             "type": "string",
@@ -80,11 +80,11 @@
         },
         "PrivateIP-NIC2":{
             "type": "string",
-            "defaultValue": "192.168.4.5"//"192.168.1.5"
+            "defaultValue": "10.75.101.38"//"192.168.4.5"//"192.168.1.5"
         },
         "subnetName3": {
         "type": "string",
-        "defaultValue" : "useast2dev-sapapp"
+        "defaultValue" : "useastus2devsaphanaHA"//"useast2dev-sapapp"
         },
         "networkInterfaceName3": {
             "type": "string",
@@ -92,11 +92,11 @@
         },
         "PrivateIP-NIC3":{
             "type": "string",
-            "defaultValue": "10.75.101.235"
+            "defaultValue": "10.75.101.54"//"10.75.101.235"
         },
         "enableAcceleratedNetworking": {
             "type": "bool",
-            "defaultValue": "true"
+            "defaultValue": true
         },
         "backendPoolId": {
             "type": "string",

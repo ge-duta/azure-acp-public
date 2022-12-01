@@ -12,7 +12,7 @@
         },
         "PrivateIP-NIC1":{
             "type": "string",
-            "defaultValue": "10.75.101.233"
+            "defaultValue": "10.75.101.12"//"10.75.101.233"
         },        
         "enableAcceleratedNetworking": {
             "type": "bool",
@@ -20,11 +20,11 @@
         },
         "subnetName": {
             "type": "string",
-            "defaultValue": "useast2dev-sapapp"
+            "defaultValue": "useastus2devsapapp"//"useast2dev-sapapp"
         },
         "virtualNetworkId": {
             "type": "string",
-            "defaultValue": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet"
+            "defaultValue": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/RG-useast2dev-devSAP/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet"//"/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet"
         },
         // "virtualMachineName": {
         //     "type": "string",

@@ -9,16 +9,16 @@
             "value": "sapdevtest-loadrunner-vm02-nic1"
         },
         "PrivateIP-NIC1":{
-            "value": "10.75.101.232"
+            "value": "10.75.101.13"//"10.75.101.232"
         },        
         "enableAcceleratedNetworking": {
             "value": true
         },
         "subnetName": {
-            "value": "useast2dev-sapapp"
+            "value": "useastus2devsapapp"//"useast2dev-sapapp"
         },
         "virtualNetworkId": {
-            "value": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet"
+            "value": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/RG-useast2dev-devSAP/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet"//"/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet"
         },
         // "virtualMachineName": {
         //     "value": "sapdevtest-loadrunner-vm02"
@@ -51,7 +51,7 @@
             "value": null
         },
         "zone": {
-            "value": "2"
+            "value": "1"
         }
     }
 }
