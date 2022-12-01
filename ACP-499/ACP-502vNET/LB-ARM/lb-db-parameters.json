@@ -9,7 +9,7 @@
       "value": "eastus2"
     },
     "subnetid": {
-      "value": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/USEast2-SAP-devtest-rg/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet/subnets/useast2dev-saphana"
+      "value": "/subscriptions/dcfe91a7-07d9-42dc-b749-b9dfedf9ac86/resourceGroups/RG-useast2dev-devSAP/providers/Microsoft.Network/virtualNetworks/useast2dev-testvnet/subnets/useastus2devsaphana" 
     },
     "lbFrontEndName": {
       "value": "FrontEndIP"
