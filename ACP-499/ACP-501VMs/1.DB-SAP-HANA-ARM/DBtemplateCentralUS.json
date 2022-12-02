@@ -57,7 +57,7 @@
         },
         "subnetName": {
             "type": "string",
-            "defaultValue" : "uscentralusdevsapapp"
+            "defaultValue" : "uscentraldevsapapp"
         },
         "networkInterfaceName1": {
             "type": "string",
@@ -69,7 +69,7 @@
         },
         "subnetName2": {
             "type": "string",
-            "defaultValue" : "uscentralusdevsaphana"
+            "defaultValue" : "uscentraldevsaphana"
         },
         "networkInterfaceName2": {
             "type": "string",

@@ -36,7 +36,7 @@
         },
         "subnetName": {
             "type": "string",
-            "defaultValue": "useastus2devsapapp"//"useast2dev-sapapp"
+            "defaultValue": "useast2devsapapp"//"useast2dev-sapapp"
         },
         "privateIP": {
             "type": "string",

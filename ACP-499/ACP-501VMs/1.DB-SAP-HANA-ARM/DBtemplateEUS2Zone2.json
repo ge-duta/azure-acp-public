@@ -60,7 +60,7 @@
         },
         "subnetName": {
             "type": "string",
-            "defaultValue" : "useastus2devsapapp"// "useast2dev-saphana"
+            "defaultValue" : "useast2devsapapp"// "useast2dev-saphana"
         },
         "networkInterfaceName1": {
             "type": "string",
@@ -72,7 +72,7 @@
         },
         "subnetName2": {
         "type": "string",
-        "defaultValue" : "useastus2devsaphana"//"useast2-sapHA2"//"useast2dev-saphana"
+        "defaultValue" : "useast2devsaphana"//"useast2-sapHA2"//"useast2dev-saphana"
         },
         "networkInterfaceName2": {
             "type": "string",
@@ -84,7 +84,7 @@
         },
         "subnetName3": {
         "type": "string",
-        "defaultValue" : "useastus2devsaphanaHA"//"useast2dev-sapapp"
+        "defaultValue" : "useast2devsaphanaHA"//"useast2dev-sapapp"
         },
         "networkInterfaceName3": {
             "type": "string",

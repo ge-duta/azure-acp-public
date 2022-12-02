@@ -27,7 +27,7 @@
         "value": "sapdevtest-jumpserver-vm01-nic1"// "sapdevtest-jumpserver-vm01-nic2"
       },
       "subnetName": {
-        "value": "useastus2devsapapp"//"useast2dev-sapapp"
+        "value": "useast2devsapapp"//"useast2dev-sapapp"
       },
       "privateIP": {
         "value": "10.75.101.11"
