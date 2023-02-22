@@ -1,0 +1,2 @@
+Update Management configuration step by step guide updated on below url.
+[Documentation](https://nttdatagroup.sharepoint.com/teams/SRVS-COMM-FS-CDTS-CloudPratices/Shared%20Documents/Forms/AllItems.aspx?id=%2Fteams%2FSRVS%2DCOMM%2DFS%2DCDTS%2DCloudPratices%2FShared%20Documents%2FAutomation%20Project%2FDocuments%2FAzure%2FACP%2D499%20SAP%20HANA%20on%20Azure%2FACP%20504%20Configure%20Update%20Management&viewid=9ebf676b%2D357d%2D4fa7%2Da84d%2D68f655d0627f)
